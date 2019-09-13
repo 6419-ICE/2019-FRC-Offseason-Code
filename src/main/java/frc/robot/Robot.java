@@ -14,6 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -49,26 +53,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-  }
-
-  /**
-   * This function is run once each time the robot enters autonomous mode.
-   */
-  @Override
-  public void autonomousInit() {
-    m_timer.reset();
-    m_timer.start();
-        if (m_timer.get() < 2.0) {
-      m_robotDrive.arcadeDrive(0.5, 0.0);
-      System.out.println("Go!"); // drive forwards half speed
-    } else {
-      m_robotDrive.stopMotor(); // stop robot
-      System.out.println("poopy face");
-
     m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
   }
 
   /**
@@ -122,7 +107,6 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
->>>>>>> d42debe947872255138d4f28583dfb8fb1350928
     }
   }
 
@@ -131,7 +115,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-<<<<<<< HEAD
     // Drive for 2 seconds
     if (m_timer.get() < 2.0) {
       m_robotDrive.arcadeDrive(0.5, 0.0);
@@ -157,28 +140,6 @@ public class Robot extends TimedRobot {
     m_robotDrive.arcadeDrive(m_stick.getY(), m_stick.getX()); // Move using drive object
     m_robotDrive2.arcadeDrive(m_stick.getY(), m_stick.getX());
 
-=======
-    Scheduler.getInstance().run();
-  }
-
-  @Override
-  public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
-  }
-
-  /**
-   * This function is called periodically during operator control.
-   */
-  @Override
-  public void teleopPeriodic() {
-    Scheduler.getInstance().run();
->>>>>>> d42debe947872255138d4f28583dfb8fb1350928
   }
 
   /**
