@@ -118,10 +118,9 @@ public class Robot extends TimedRobot {
     // Drive for 2 seconds
     if (m_timer.get() < 2.0) {
       m_robotDrive.arcadeDrive(0.5, 0.0);
-      System.out.println("Go!"); // drive forwards half speed
+      System.out.println("Autonomus Started for 2 seconds"); // drive forwards half speed
     } else {
       m_robotDrive.stopMotor(); // stop robot
-      System.out.println("poopy face");
     }
   }
 
