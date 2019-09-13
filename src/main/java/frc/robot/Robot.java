@@ -7,13 +7,6 @@
 
 package frc.robot;
 
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-=======
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -21,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
->>>>>>> d42debe947872255138d4f28583dfb8fb1350928
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,17 +33,15 @@ public class Robot extends TimedRobot {
  
   private final Joystick m_stick = new Joystick(0);
   private final Timer m_timer = new Timer();
-=======
- * creating this project, you must also update the build.gradle file in the
+
+ /* creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
->>>>>>> d42debe947872255138d4f28583dfb8fb1350928
 
   /**
    * This function is run when the robot is first started up and should be
@@ -59,7 +49,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-<<<<<<< HEAD
   }
 
   /**
@@ -75,7 +64,7 @@ public class Robot extends TimedRobot {
     } else {
       m_robotDrive.stopMotor(); // stop robot
       System.out.println("poopy face");
-=======
+
     m_oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
