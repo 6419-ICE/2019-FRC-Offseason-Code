@@ -18,6 +18,8 @@ public class RobotMap {
   public static int frontRight = 2;
   public static int backLeft = 3;
   public static int backRight = 1;
+  //PD waz here
+
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
   // public static int leftMotor = 1;
