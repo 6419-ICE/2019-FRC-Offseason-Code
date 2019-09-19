@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
@@ -25,10 +24,10 @@ import edu.wpi.first.wpilibj.Timer;
  * the resource directory.
  */
 public class Robot extends TimedRobot {
-  private final PWMVictorSPX frontLeft = new PWMVictorSPX(4); // This is how you label port
-  private final PWMVictorSPX frontRight = new PWMVictorSPX(2);
-  private final PWMVictorSPX backLeft = new PWMVictorSPX(3);
-  private final PWMVictorSPX backRight = new PWMVictorSPX(1);
+  private final PWMVictorSPX frontLeft = new PWMVictorSPX(RobotMap.frontLeft); // This is how you label port
+  private final PWMVictorSPX frontRight = new PWMVictorSPX(RobotMap.frontRight);
+  private final PWMVictorSPX backLeft = new PWMVictorSPX(RobotMap.backLeft);
+  private final PWMVictorSPX backRight = new PWMVictorSPX(RobotMap.backRight);
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(frontLeft, frontRight); // Drive object
   private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(backLeft, backRight); // Drive object
 
@@ -39,7 +38,8 @@ public class Robot extends TimedRobot {
    * creating this project, you must also update the build.gradle file in the
    * project.
    */
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  // public static ExampleSubsystem m_subsystem = new ExampleSubsystem(); -- Remvoed cuz it not needed
+  
   public static OI m_oi;
 
   Command m_autonomousCommand;
