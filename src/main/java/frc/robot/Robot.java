@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -24,20 +25,15 @@ import edu.wpi.first.wpilibj.Timer;
  * the resource directory.
  */
 public class Robot extends TimedRobot {
-  private final PWMVictorSPX frontLeft = new PWMVictorSPX(RobotMap.frontLeft); // This is how you label port
+  private final Spark frontLeft = new Spark(RobotMap.frontLeft); // This is how you label port
   private final PWMVictorSPX frontRight = new PWMVictorSPX(RobotMap.frontRight);
   private final PWMVictorSPX backLeft = new PWMVictorSPX(RobotMap.backLeft);
   private final PWMVictorSPX backRight = new PWMVictorSPX(RobotMap.backRight);
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(frontLeft, frontRight); // Drive object
   private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(backLeft, backRight); // Drive object
 
-  private final Joystick m_stick = new Joystick(0);
   private final Timer m_timer = new Timer();
 
-  /*
-   * creating this project, you must also update the build.gradle file in the
-   * project.
-   */
   // public static ExampleSubsystem m_subsystem = new ExampleSubsystem(); -- Remvoed cuz it not needed
   
   public static OI m_oi;
@@ -45,10 +41,6 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
   @Override
   public void robotInit() {
     m_oi = new OI();
@@ -67,11 +59,6 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
   }
 
-  /**
-   * This function is called once each time the robot enters Disabled mode. You
-   * can use it to reset any subsystem information you want to clear when the
-   * robot is disabled.
-   */
   @Override
   public void disabledInit() {
   }
@@ -110,9 +97,6 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /**
-   * This function is called periodically during autonomous.
-   */
   @Override
   public void autonomousPeriodic() {
     // Drive for 2 seconds
@@ -124,26 +108,17 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /**
-   * This function is called once each time the robot enters teleoperated mode.
-   */
   @Override
   public void teleopInit() {
   }
 
-  /**
-   * This function is called periodically during teleoperated mode.
-   */
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.arcadeDrive(m_stick.getY(), m_stick.getX()); // Move using drive object
-    m_robotDrive2.arcadeDrive(m_stick.getY(), m_stick.getX());
+    m_robotDrive.arcadeDrive(m_oi.getJoy().getY(), m_oi.getJoy().getX()); // Move using drive object
+    m_robotDrive2.arcadeDrive(m_oi.getJoy().getY(), m_oi.getJoy().getX());
 
   }
 
-  /**
-   * This function is called periodically during test mode.
-   */
   @Override
   public void testPeriodic() {
   }
