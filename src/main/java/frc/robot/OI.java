@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
   //// CREATING BUTTONS
-  private final Joystick m_stick;
+  Joystick m_stick;
 
   public OI() {
     m_stick = new Joystick(RobotMap.joy1);

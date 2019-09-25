@@ -7,15 +7,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer; 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.*; //PD
 
@@ -35,19 +37,29 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  */
 
-PD */ 
-  
-  private final Spark frontLeft = new Spark(RobotMap.frontLeft); // This is how you label port
+  private final CANSparkMax testMotor = new CANSparkMax(RobotMap.testDeviceID, MotorType.kBrushless);
+  private final CANSparkMax testMotor2 = new CANSparkMax(RobotMap.testDeviceID2, MotorType.kBrushless);
+  private final CANSparkMax testMotor3 = new CANSparkMax(RobotMap.testDeviceID3, MotorType.kBrushless);
+
+  // private final PWMVictorSPX frontLeft = new PWMVictorSPX(RobotMap.frontLeft); // This is how you label port
   private final PWMVictorSPX frontRight = new PWMVictorSPX(RobotMap.frontRight);
-  private final PWMVictorSPX backLeft = new PWMVictorSPX(RobotMap.backLeft);
+  // private final PWMVictorSPX backLeft = new PWMVictorSPX(RobotMap.backLeft);
   private final PWMVictorSPX backRight = new PWMVictorSPX(RobotMap.backRight);
-  private final DifferentialDrive m_robotDrive = new DifferentialDrive(frontLeft, frontRight); // Drive object
-  private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(backLeft, backRight); // Drive object
+
+  private final SpeedControllerGroup testMotors = new SpeedControllerGroup(testMotor, testMotor2, testMotor3);
+  //TODO ADD SPARKS FOR RIGHT SET
+  private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRight, backRight);
+
+  private final DifferentialDrive m_robotDrive = new DifferentialDrive(testMotors, rightMotors); // Front Drive Object
+  // TODO ADD MOTORS BEFORE UNCOMMENTING
+  // private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(backLeft, backRight); // Back Drive
 
   private final Timer m_timer = new Timer();
 
-  // public static ExampleSubsystem m_subsystem = new ExampleSubsystem(); -- Remvoed cuz it not needed
+  // Removed for now. Reuse for subsystems (i.e hatch panel arm)
+  // public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   
   public static OI m_oi;
 
@@ -102,6 +114,10 @@ PD */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
+    /* Needed?
+    m_timer.reset();
+    m_timer.start();
+    */
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -134,9 +150,8 @@ PD */
   @Override
   public void teleopPeriodic() {
     m_robotDrive.arcadeDrive(m_oi.getJoy().getY(), m_oi.getJoy().getX()); // Move using drive object
-    m_robotDrive2.arcadeDrive(m_oi.getJoy().getY(), m_oi.getJoy().getX());
-
-    
+    // TODO FIX SPARKS BEFORE UNCOMMENTING
+    // m_robotDrive2.arcadeDrive(m_oi.getJoy().getY(), m_oi.getJoy().getX());
     
     /* PD
     Update_Limelight_Tracking();
@@ -164,8 +179,8 @@ PD */
           m_Drive.arcadeDrive(drive,steer);
         }
   }
+  */
 
-    PD*/
   }
 
   @Override
