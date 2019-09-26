@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.networktables.*; //PD
+// import edu.wpi.first.networktables.*; //PD
 
 
 
@@ -187,7 +187,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
   
-  public static void Update_Limelight_Tracking() { 
+  /* public static void Update_Limelight_Tracking() { // PD
     // Limelight control
     // These numbers must be tuned for your Robot!  Be careful!
     final double STEER_K = 0.03;                    // how hard to turn toward the target
@@ -228,4 +228,5 @@ public class Robot extends TimedRobot {
     }
     m_LimelightDriveCommand = drive_cmd;
   }
+  */
 }
