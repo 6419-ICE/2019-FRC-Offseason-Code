@@ -14,15 +14,14 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  public static int frontLeft = 4;
-  public static int frontRight = 2;
-  public static int backLeft = 3;
-  public static int backRight = 1;
+  // Fix to actual ports
+  public static final int FRONT_ONE_PIN = 1, 
+                          FRONT_TWO_PIN = 2,
+                          FRONT_THREE_PIN = 3,
+                          BACK_ONE_PIN = 4,
+                          BACK_TWO_PIN = 5,                   
+                          BACK_THREE_PIN = 6;
 
-  public static final int testDeviceID = 2;
-  public static final int testDeviceID2 = 4;
-  public static final int testDeviceID3 = 5;
-
-  public static int joy1 = 0; // FIX to actual port
-  public static int joy2 = 1; // FIX to actual port
+  public static final int joy1 = 0,
+                          joy2 = 1;
 }
