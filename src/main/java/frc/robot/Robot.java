@@ -10,11 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.HandleDriveTrain;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -25,18 +27,14 @@ import edu.wpi.first.wpilibj.Timer;
  * the resource directory.
  */
 public class Robot extends TimedRobot {
-  private final Spark frontLeft = new Spark(RobotMap.frontLeft); // This is how you label port
-  private final PWMVictorSPX frontRight = new PWMVictorSPX(RobotMap.frontRight);
-  private final PWMVictorSPX backLeft = new PWMVictorSPX(RobotMap.backLeft);
-  private final PWMVictorSPX backRight = new PWMVictorSPX(RobotMap.backRight);
-  private final DifferentialDrive m_robotDrive = new DifferentialDrive(frontLeft, frontRight); // Drive object
-  private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(backLeft, backRight); // Drive object
+  public static DriveTrain drivetrain = new DriveTrain();
+  public static OI m_oi;
 
   private final Timer m_timer = new Timer();
 
-  // public static ExampleSubsystem m_subsystem = new ExampleSubsystem(); -- Remvoed cuz it not needed
-  
-  public static OI m_oi;
+  public static Subsystem drive = new DriveTrain();
+
+  Command m_drivetrain = new HandleDriveTrain();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -101,10 +99,10 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     // Drive for 2 seconds
     if (m_timer.get() < 2.0) {
-      m_robotDrive.arcadeDrive(0.5, 0.0);
+      drivetrain.drive(0.5, 0.0);
       System.out.println("Autonomus Started for 2 seconds"); // drive forwards half speed
     } else {
-      m_robotDrive.stopMotor(); // stop robot
+      drivetrain.stop(); // stop robot
     }
   }
 
@@ -114,8 +112,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.arcadeDrive(m_oi.getJoy().getY(), m_oi.getJoy().getX()); // Move using drive object
-    m_robotDrive2.arcadeDrive(m_oi.getJoy().getY(), m_oi.getJoy().getX());
+    drivetrain.drive(m_oi.leftJoy.getY(), m_oi.leftJoy.getX()); // Move using drive object
+    // drivetrain.arcadeDrive(m_oi.rightJoy.getY(), m_oi.rightJoy.getX());
 
   }
 
