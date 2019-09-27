@@ -14,7 +14,9 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  // Fix to actual ports
+
+  // TODO FIX TO ACTUAL PORTS
+
   public static final int FRONT_ONE_PIN = 1, 
                           FRONT_TWO_PIN = 2,
                           FRONT_THREE_PIN = 3,
