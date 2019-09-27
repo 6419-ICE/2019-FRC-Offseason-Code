@@ -14,6 +14,7 @@ public class DriveTrain extends Subsystem {
         frontRight = new Spark(Config.FRONT_RIGHT_PIN);
         backLeft = new Spark(Config.BACK_LEFT_PIN);
         backRight = new Spark(Config.BACK_RIGHT_PIN);
+
     }
 
     @Override
