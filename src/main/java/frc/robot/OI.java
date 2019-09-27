@@ -21,7 +21,7 @@ public class OI {
     leftJoy = new Joystick(RobotMap.joy1);
     rightJoy = new Joystick(RobotMap.joy2);
   }
-  
+
   // Button button = new JoystickButton(stick, buttonNumber);
 
   //// TRIGGERING COMMANDS WITH BUTTONS

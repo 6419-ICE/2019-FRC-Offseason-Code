@@ -19,6 +19,10 @@ public class RobotMap {
   public static int backLeft = 3;
   public static int backRight = 1;
 
+  public static final int testDeviceID = 2;
+  public static final int testDeviceID2 = 4;
+  public static final int testDeviceID3 = 5;
+
   public static int joy1 = 0; // FIX to actual port
   public static int joy2 = 1; // FIX to actual port
 }
