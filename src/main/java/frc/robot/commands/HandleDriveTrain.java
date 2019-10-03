@@ -27,7 +27,7 @@ public class HandleDriveTrain extends Command{
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.drivetrain.drive(Robot.m_oi.leftJoy.getRawAxis(1), Robot.m_oi.rightJoy.getRawAxis(1));
+    Robot.drivetrain.drive(Robot.m_oi.leftJoy.getRawAxis(1), Robot.m_oi.rightJoy.getRawAxis(1)); // Drive with Joysticks
   }
 
   // Make this return true when this Command no longer needs to run execute()
