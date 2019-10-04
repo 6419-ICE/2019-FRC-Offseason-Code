@@ -2,12 +2,14 @@ package frc.robot.subsystems;
 
 import frc.robot.Config;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 
-    private Spark frontLeft, frontRight, backLeft, backRight;
+    private CANSparkMax 
 
     public DriveTrain() {
         frontLeft = new Spark(Config.FRONT_LEFT_PIN);

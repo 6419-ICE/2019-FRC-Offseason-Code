@@ -15,12 +15,20 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
   //// CREATING BUTTONS
-  public Joystick leftJoy, rightJoy;
+  private Joystick leftJoy, rightJoy;
 
   public OI() {
-    leftJoy = new Joystick(RobotMap.joy1);
-    rightJoy = new Joystick(RobotMap.joy2);
+    this.leftJoy = new Joystick(RobotMap.joy1);
+    this.rightJoy = new Joystick(RobotMap.joy2);
   }
+
+  public Joystick getLeftJoy() {
+    return this.leftJoy;
+  };
+
+  public Joystick getRightJoy() {
+    return this.rightJoy;
+  };
 
   // Button button = new JoystickButton(stick, buttonNumber);
 

@@ -153,7 +153,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    drivetrain.drive(m_oi.leftJoy.getY(), m_oi.leftJoy.getX()); // Move using drive object
+    drivetrain.drive(m_oi.getLeftJoy().getY(), m_oi.getLeftJoy().getX()); // Move using drive object
     
     /* PD
     Update_Limelight_Tracking();
