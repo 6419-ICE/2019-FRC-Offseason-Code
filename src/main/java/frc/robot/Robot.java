@@ -12,8 +12,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.commands.HandleDriveTrain;
+import frc.robot.commands.*;
 import frc.robot.subsystems.DriveTrain;
 
 // import edu.wpi.first.networktables.*; //PD
@@ -94,17 +95,18 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
-    /* Needed?
+    
     m_timer.reset();
     m_timer.start();
-    */
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-     * switch(autoSelected) { case "My Auto": autonomousCommand = new
-     * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-     * ExampleCommand(); break; }
-     */
+    String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+     
+    // Select an Auto
+    switch(autoSelected) { 
+      case "Auto": m_autonomousCommand = new Auto();
+        break; 
+     // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
+    }
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
