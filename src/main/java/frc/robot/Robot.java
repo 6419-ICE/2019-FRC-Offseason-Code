@@ -7,24 +7,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer; 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.commands.HandleDriveTrain;
+import frc.robot.commands.*;
 import frc.robot.subsystems.DriveTrain;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 // import edu.wpi.first.networktables.*; //PD
-
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,14 +27,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  * the resource directory.
  */
 public class Robot extends TimedRobot {
-  public static DriveTrain drivetrain = new DriveTrain();
+  public static DriveTrain drivetrain;
   public static OI m_oi;
 
   private final Timer m_timer = new Timer();
 
   public static Subsystem drive = new DriveTrain();
-
-  Command m_drivetrain = new HandleDriveTrain();
   
   /* PD
   private static final String kDefaultAuto = "Default";
@@ -50,29 +41,15 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   */
 
-  private final CANSparkMax testMotor = new CANSparkMax(RobotMap.testDeviceID, MotorType.kBrushless);
-  private final CANSparkMax testMotor2 = new CANSparkMax(RobotMap.testDeviceID2, MotorType.kBrushless);
-  private final CANSparkMax testMotor3 = new CANSparkMax(RobotMap.testDeviceID3, MotorType.kBrushless);
-
-  // private final PWMVictorSPX frontLeft = new PWMVictorSPX(RobotMap.frontLeft); // This is how you label port
-  private final PWMVictorSPX frontRight = new PWMVictorSPX(RobotMap.frontRight);
-  // private final PWMVictorSPX backLeft = new PWMVictorSPX(RobotMap.backLeft);
-  private final PWMVictorSPX backRight = new PWMVictorSPX(RobotMap.backRight);
-
-  private final SpeedControllerGroup testMotors = new SpeedControllerGroup(testMotor, testMotor2, testMotor3);
-  //TODO ADD SPARKS FOR RIGHT SET
-  private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRight, backRight);
-
-  private final DifferentialDrive m_robotDrive = new DifferentialDrive(testMotors, rightMotors); // Front Drive Object
-  // TODO ADD MOTORS BEFORE UNCOMMENTING
-  // private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(backLeft, backRight); // Back Drive
-
+  Command m_drivetrain;
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
+
     m_oi = new OI();
+    drivetrain = new DriveTrain();
     
     /* PD
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -118,17 +95,18 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
-    /* Needed?
+    
     m_timer.reset();
     m_timer.start();
-    */
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-     * switch(autoSelected) { case "My Auto": autonomousCommand = new
-     * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-     * ExampleCommand(); break; }
-     */
+    String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+     
+    // Select an Auto
+    switch(autoSelected) { 
+      case "Auto": m_autonomousCommand = new AutoGroup();
+        break; 
+     // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
+    }
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -140,7 +118,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     // Drive for 2 seconds
     if (m_timer.get() < 2.0) {
-      drivetrain.drive(0.5, 0.0);
+      drivetrain.drive(0.5, 0.5);
       System.out.println("Autonomus Started for 2 seconds"); // drive forwards half speed
     } else {
       drivetrain.stop(); // stop robot
@@ -149,11 +127,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_drivetrain = new HandleDriveTrain();
   }
 
   @Override
   public void teleopPeriodic() {
-    drivetrain.drive(m_oi.getLeftJoy().getY(), m_oi.getLeftJoy().getX()); // Move using drive object
+    m_drivetrain.start();
     
     /* PD
     Update_Limelight_Tracking();
