@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
      
     // Select an Auto
     switch(autoSelected) { 
-      case "Auto": m_autonomousCommand = new AutoGroup();
+      case "Auto": m_autonomousCommand = new AutoGroup(autoSelected);
         break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
 /**
- * Handle the Drivetrain
+ * Autonomous Command Group - Primary Auto
  */
 public class AutoGroup extends CommandGroup{
     private String name;
