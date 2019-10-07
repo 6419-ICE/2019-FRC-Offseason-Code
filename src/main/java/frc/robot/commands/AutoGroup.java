@@ -21,6 +21,7 @@ public class AutoGroup extends CommandGroup{
     @Override
     protected void initialize() {
         Robot.drivetrain.drive(0, 0); // Don't move on init
+        System.out.println(name + "has started!");
     }
 
     // Called repeatedly when this Command is scheduled to run
