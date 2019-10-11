@@ -13,7 +13,7 @@ public class AutoGroup extends CommandGroup{
         name = n;
 
         addSequential(new Forward());
-        addSequential(new TurnLeft());
+        addSequential(new TurnLeft(90));
         addSequential(new Forward());
         addSequential(new DeliverHatchPanel());
     }
