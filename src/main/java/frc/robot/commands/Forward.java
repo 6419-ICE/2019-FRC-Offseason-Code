@@ -16,7 +16,7 @@ public class Forward extends Command{
    private double distancePerRotation = 4 * Math.PI;
 
     public Forward(double d) {
-        this.distance = d;
+        distance = d;
         
     }
 
