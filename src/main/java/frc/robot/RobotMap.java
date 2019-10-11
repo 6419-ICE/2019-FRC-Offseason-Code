@@ -26,6 +26,4 @@ public class RobotMap {
 
   public static final int joy1 = 0,
                           joy2 = 1;
-
-  public static final int GYRO_PORT = 0;
 }

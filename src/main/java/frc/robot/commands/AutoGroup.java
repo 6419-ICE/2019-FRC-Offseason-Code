@@ -4,19 +4,24 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
 /**
- * Handle the Drivetrain
+ * Autonomous Command Group - Primary Auto
  */
 public class AutoGroup extends CommandGroup{
+    private String name;
 
-    public AutoGroup() {
+    public AutoGroup(String n) {
+        name = n;
+
         addSequential(new Forward());
         addSequential(new TurnLeft());
+        addSequential(new Forward());
         addSequential(new DeliverHatchPanel());
     }
 
     @Override
     protected void initialize() {
         Robot.drivetrain.drive(0, 0); // Don't move on init
+        System.out.println(name + "has started!");
     }
 
     // Called repeatedly when this Command is scheduled to run

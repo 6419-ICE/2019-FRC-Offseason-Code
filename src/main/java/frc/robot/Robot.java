@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
      
     // Select an Auto
     switch(autoSelected) { 
-      case "Auto": m_autonomousCommand = new AutoGroup();
+      case "Auto": m_autonomousCommand = new AutoGroup(autoSelected);
         break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }
@@ -116,13 +116,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
     // Drive for 2 seconds
+    /* Test Code
     if (m_timer.get() < 2.0) {
       drivetrain.drive(0.5, 0.5);
       System.out.println("Autonomus Started for 2 seconds"); // drive forwards half speed
     } else {
       drivetrain.stop(); // stop robot
     }
+    */
   }
 
   @Override
@@ -132,6 +135,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    Scheduler.getInstance().run();
     m_drivetrain.start();
     
     /* PD
@@ -166,6 +170,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
   }
   
   /* public static void Update_Limelight_Tracking() { // PD
