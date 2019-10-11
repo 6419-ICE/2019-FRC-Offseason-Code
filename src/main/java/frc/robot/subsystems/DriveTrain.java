@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrain extends Subsystem {
 
     private CANSparkMax left1, left2, left3, right1, right2, right3;
+    public CANEncoder motorEncoder;
 
     public DriveTrain() {
         left1 = new CANSparkMax(RobotMap.FRONT_ONE_PIN, MotorType.kBrushless);
@@ -19,6 +21,7 @@ public class DriveTrain extends Subsystem {
         right2 = new CANSparkMax(RobotMap.BACK_TWO_PIN, MotorType.kBrushless);
         right3 = new CANSparkMax(RobotMap.BACK_THREE_PIN, MotorType.kBrushless);
 
+        motorEncoder = left1.getEncoder();
         left2.follow(left1);
         left3.follow(left1);
 
