@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.*;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.*;
 
 // import edu.wpi.first.networktables.*; //PD
 
@@ -28,6 +28,7 @@ import frc.robot.subsystems.DriveTrain;
  */
 public class Robot extends TimedRobot {
   public static DriveTrain drivetrain;
+  public static Arm arm;
   public static OI m_oi;
 
   private final Timer m_timer = new Timer();
