@@ -3,9 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.Timer;
 import com.analog.adis16448.frc.ADIS16448_IMU;  
 /**
  * Move Forward to Cargo Ship
