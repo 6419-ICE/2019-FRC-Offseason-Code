@@ -17,6 +17,7 @@ public class RobotMap {
 
   // TODO FIX TO ACTUAL PORTS
 
+  /* Motor Ports */
   public static final int FRONT_ONE_PIN = 1, 
                           FRONT_TWO_PIN = 2,
                           FRONT_THREE_PIN = 3,
@@ -24,6 +25,12 @@ public class RobotMap {
                           BACK_TWO_PIN = 5,                   
                           BACK_THREE_PIN = 6;
 
+  /* Joystick Ports */
   public static final int joy1 = 0,
                           joy2 = 1;
+
+  /* Default Autonomous Values */
+  public static final double autoAngle = 90,
+                          d1 = 0,
+                          d2 = 0;
 }
