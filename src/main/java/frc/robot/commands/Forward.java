@@ -15,6 +15,7 @@ public class Forward extends Command{
 
     public Forward(double d) {
         this.distance = d;
+        
     }
 
     @Override

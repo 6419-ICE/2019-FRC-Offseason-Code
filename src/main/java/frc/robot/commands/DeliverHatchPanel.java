@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 /**
@@ -11,6 +12,7 @@ public class DeliverHatchPanel extends Command{
     @Override
     protected void initialize() {
         Robot.drivetrain.drive(0, 0); // Don't move on init
+        requires(Robot.arm);
     }
 
     // Called repeatedly when this Command is scheduled to run

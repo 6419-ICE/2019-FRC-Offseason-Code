@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrain extends Subsystem {
 
     private CANSparkMax left1, left2, left3, right1, right2, right3;
-    private SpeedControllerGroup left;
-    private SpeedControllerGroup right;
 
     public DriveTrain() {
         left1 = new CANSparkMax(RobotMap.FRONT_ONE_PIN, MotorType.kBrushless);
@@ -21,10 +19,12 @@ public class DriveTrain extends Subsystem {
         right1 = new CANSparkMax(RobotMap.BACK_ONE_PIN, MotorType.kBrushless);
         right2 = new CANSparkMax(RobotMap.BACK_TWO_PIN, MotorType.kBrushless);
         right3 = new CANSparkMax(RobotMap.BACK_THREE_PIN, MotorType.kBrushless);
-        
-        left = new SpeedControllerGroup(left1, left2, left3);
-        right = new SpeedControllerGroup(right1, right2, right3);
 
+        left2.follow(left1);
+        left3.follow(left1);
+
+        right2.follow(right1);
+        right3.follow(right1);
     }
 
     @Override
@@ -34,12 +34,12 @@ public class DriveTrain extends Subsystem {
     }
 
     public void drive(double l, double r) {
-        left.set(l);
-        right.set(r);
+        left1.set(l);
+        right1.set(r);
     }
 
     public void stop() {
-        left.set(0.0);
-        right.set(0.0);
+        left1.set(0.0);
+        right1.set(0.0);
     }
 }
