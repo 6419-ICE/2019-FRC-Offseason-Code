@@ -18,4 +18,8 @@ public class AutoGroup extends CommandGroup{
         addSequential(new Forward(RobotMap.d2));
         addSequential(new DeliverHatchPanel());
     }
+
+    public String getAutoName() {
+        return name;
+    }
 }
