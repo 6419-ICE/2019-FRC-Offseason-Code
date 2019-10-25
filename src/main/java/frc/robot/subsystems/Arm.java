@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.HandleArm;
 
 public class Arm extends Subsystem {
-    private PWMVictorSPX armMotor = new PWMVictorSPX(0);  
+    private PWMVictorSPX armMotor;  
 
 
     public Arm() {
-        
+       armMotor = new PWMVictorSPX(0);
     }
 
     @Override

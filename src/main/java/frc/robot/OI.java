@@ -24,7 +24,7 @@ public class OI {
     this.leftJoy = new Joystick(RobotMap.joy1);
     this.rightJoy = new Joystick(RobotMap.joy2);
     
-    this.armUp = new JoystickButton(leftJoy, RobotMap.arm1);
+    this.armUp = new JoystickButton(rightJoy, RobotMap.arm1);
     this.armDown = new JoystickButton(rightJoy, RobotMap.arm2);
   }
 

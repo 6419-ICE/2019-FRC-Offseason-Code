@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class HandleArm extends Command {
   private double motorPower;
@@ -22,12 +23,17 @@ public class HandleArm extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.arm.armMotor(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.arm.armMotor(motorPower);
+    if (Robot.m_oi.isArmDownPressed()){
+        Robot.arm.armMotor(1);
+    }else if(Robot.m_oi.isArmUpPressed()){
+        Robot.arm.armMotor(0);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
