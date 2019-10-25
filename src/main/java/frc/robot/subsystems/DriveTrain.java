@@ -8,6 +8,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
@@ -59,8 +60,8 @@ public class DriveTrain extends PIDSubsystem {
     }
 
     public void drive(double l, double r) {
-        left1.set(-l * 0.7);
-        right1.set(r * 0.7);
+        left1.set(-l * 0.);
+        right1.set(r * 0.3);
     }
 
     public void stop() {

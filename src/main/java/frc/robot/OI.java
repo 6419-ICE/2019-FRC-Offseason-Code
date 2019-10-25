@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,10 +17,13 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
   //// CREATING BUTTONS
   private Joystick leftJoy, rightJoy;
+  private Button armUp, armDown;
 
   public OI() {
     this.leftJoy = new Joystick(RobotMap.joy1);
     this.rightJoy = new Joystick(RobotMap.joy2);
+    
+    this
   }
 
   public Joystick getLeftJoy() {
