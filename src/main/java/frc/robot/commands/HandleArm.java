@@ -32,7 +32,7 @@ public class HandleArm extends Command {
     if (Robot.m_oi.isArmDownPressed()){
         Robot.arm.armMotor(1);
     }else if(Robot.m_oi.isArmUpPressed()){
-        Robot.arm.armMotor(0);
+        Robot.arm.armMotor(-1);
     }
   }
 
