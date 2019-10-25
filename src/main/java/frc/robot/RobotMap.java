@@ -15,8 +15,6 @@ package frc.robot;
  */
 public class RobotMap {
 
-  // TODO FIX TO ACTUAL PORTS
-
   /* Motor Ports */
   public static final int FRONT_ONE_PIN = 1, 
                           FRONT_TWO_PIN = 2,

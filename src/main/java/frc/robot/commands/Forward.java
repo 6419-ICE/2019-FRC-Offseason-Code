@@ -30,7 +30,7 @@ public class Forward extends Command{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(distancePerRotation * Robot.drivetrain.motorEncoder.getPosition() < distance){
+        if(distancePerRotation * startingPosition < distance){
             double turningValue = imu.getAngle() * turningConstant;
             Robot.drivetrain.drive(0.5 - turningValue, 0.5 + turningValue); // TODO
         }
