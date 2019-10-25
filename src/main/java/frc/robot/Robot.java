@@ -129,11 +129,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    /* Hatch Panel Checker */
-    m_oi.getArmUpBtn().whileActive(new HandleArm(RobotMap.armPower)); // Raise Hatch Panel
-    m_oi.getArmDownBtn().whileActive(new HandleArm(-RobotMap.armPower)); // Lower Hatch Panel
-
-
     /* PD
     Update_Limelight_Tracking();
 
