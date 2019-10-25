@@ -8,48 +8,43 @@ import frc.robot.Robot;
 /**
  * Turn Left to align with Cargo Ship
  */
-public class TurnLeft extends Command{
-    private final ADIS16448_IMU imu = new ADIS16448_IMU();
+public class TurnToHeading extends Command {
 
-    private double turnAngle;
-    private double robotAngle;
-    private boolean done;
-    //private final Timer timer = new Timer();
+    private double heading;
+
+    public TurnToHeading(double heading) {
+        this.heading = heading;
+    }
+
     @Override
     protected void initialize() {
         Robot.drivetrain.drive(0, 0); // Don't move on init
-        imu.reset(); // Reset angle
-    }
-    
-    public TurnLeft(double a){
-        turnAngle = a;
+        Robot.drivetrain.resetHeading();
+        Robot.drivetrain.setHeadingTarget(heading);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        robotAngle = imu.getAngle();
-        if (robotAngle < turnAngle){ //check how get angle pulls 
-            Robot.drivetrain.drive(-.5, .5);
-        } else {
-            done = true;
-        }
+        Robot.drivetrain.setClosedLoopEnabled(true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return done;
+        return Robot.drivetrain.atHeadingTarget();
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        Robot.drivetrain.setClosedLoopEnabled(false);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+        end();
     }
 }

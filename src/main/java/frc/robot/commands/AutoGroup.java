@@ -14,7 +14,7 @@ public class AutoGroup extends CommandGroup{
         name = n;
 
         addSequential(new Forward(RobotMap.d1));
-        addSequential(new TurnLeft(RobotMap.autoAngle));
+        addSequential(new TurnToHeading(RobotMap.autoAngle));
         addSequential(new Forward(RobotMap.d2));
         addSequential(new DeliverHatchPanel());
     }

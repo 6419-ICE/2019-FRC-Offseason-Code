@@ -32,8 +32,6 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
 
   private final Timer m_timer = new Timer();
-
-  public static Subsystem drive = new DriveTrain();
   
   /* PD
   private static final String kDefaultAuto = "Default";
@@ -42,7 +40,6 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   */
 
-  Command m_drivetrain;
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -131,13 +128,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_drivetrain = new HandleDriveTrain();
+
   }
 
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    m_drivetrain.start();
     
     /* PD
     Update_Limelight_Tracking();
