@@ -27,8 +27,15 @@ public class RobotMap {
   public static final int joy1 = 0,
                           joy2 = 1;
 
+  /* Joystick Buttons */
+  public static final int arm1 = 3,
+                          arm2 = 4;
+
   /* Default Autonomous Values */
   public static final double autoAngle = 90,
                           d1 = 0,
                           d2 = 0;
+
+  /* Hatch Panel Arm Fixed Power */
+  public static final double armPower = 1.0;
 }

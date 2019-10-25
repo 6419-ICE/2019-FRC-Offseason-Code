@@ -11,8 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class HandleArm extends Command {
-  public HandleArm() {
+  private double motorPower;
+
+  public HandleArm(double power) {
     requires(Robot.arm);
+
+    this.motorPower = power;
   }
 
   // Called just before this Command runs the first time
@@ -23,6 +27,7 @@ public class HandleArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.arm.armMotor(motorPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,5 +45,6 @@ public class HandleArm extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.arm.armMotor(0.0);
   }
 }

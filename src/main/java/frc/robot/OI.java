@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -23,18 +24,33 @@ public class OI {
     this.leftJoy = new Joystick(RobotMap.joy1);
     this.rightJoy = new Joystick(RobotMap.joy2);
     
-    this
+    this.armUp = new JoystickButton(leftJoy, RobotMap.arm1);
+    this.armDown = new JoystickButton(rightJoy, RobotMap.arm2);
   }
 
   public Joystick getLeftJoy() {
-    return this.leftJoy;
+    return leftJoy;
   };
 
   public Joystick getRightJoy() {
-    return this.rightJoy;
+    return rightJoy;
   };
 
-  // Button button = new JoystickButton(stick, buttonNumber);
+  public Button getArmUpBtn() {
+    return armUp;
+  }
+
+  public Button getArmDownBtn() {
+    return armDown;
+  }
+
+  public boolean isArmUpPressed() {
+    return armUp.get();
+  }
+
+  public boolean isArmDownPressed () {
+    return armDown.get();
+  }
 
   //// TRIGGERING COMMANDS WITH BUTTONS
   // Start the command when the button is pressed and let it run the command

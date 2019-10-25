@@ -118,15 +118,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-    // Drive for 2 seconds
-    /* Test Code
-    if (m_timer.get() < 2.0) {
-      drivetrain.drive(0.5, 0.5);
-      System.out.println("Autonomus Started for 2 seconds"); // drive forwards half speed
-    } else {
-      drivetrain.stop(); // stop robot
-    }
-    */
   }
 
   @Override
@@ -137,7 +128,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    
+
+    /* Hatch Panel Checker */
+    m_oi.getArmUpBtn().whileActive(new HandleArm(RobotMap.armPower)); // Raise Hatch Panel
+    m_oi.getArmDownBtn().whileActive(new HandleArm(-RobotMap.armPower)); // Lower Hatch Panel
+
+
     /* PD
     Update_Limelight_Tracking();
 
