@@ -16,7 +16,12 @@ public class DriveTrain extends PIDSubsystem {
     private ADIS16448_IMU imu;
 
     private CANSparkMax left1, left2, left3, right1, right2, right3;
-    public CANEncoder motorEncoder;
+    public CANEncoder   motorEncoderL1,
+                        motorEncoderL2,
+                        motorEncoderL3,
+                        motorEncoderR1,
+                        motorEncoderR2,
+                        motorEncoderR3;
 
     public DriveTrain() {
         super(1, 0, 0, 0);
@@ -32,7 +37,13 @@ public class DriveTrain extends PIDSubsystem {
         right2 = new CANSparkMax(RobotMap.BACK_TWO_PIN, MotorType.kBrushless);
         right3 = new CANSparkMax(RobotMap.BACK_THREE_PIN, MotorType.kBrushless);
 
-        motorEncoder = left1.getEncoder();
+        motorEncoderL1 = left1.getEncoder();
+        motorEncoderL2 = left2.getEncoder();
+        motorEncoderL3 = left3.getEncoder();
+        motorEncoderR1 = right1.getEncoder();
+        motorEncoderR2 = right2.getEncoder();
+        motorEncoderR3 = right3.getEncoder();
+        
         left2.follow(left1);
         left3.follow(left1);
 
@@ -48,7 +59,7 @@ public class DriveTrain extends PIDSubsystem {
     }
 
     public void drive(double l, double r) {
-        left1.set(l * 0.7);
+        left1.set(-l * 0.7);
         right1.set(r * 0.7);
     }
 
