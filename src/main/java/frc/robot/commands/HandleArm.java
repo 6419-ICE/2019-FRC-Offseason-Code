@@ -12,12 +12,9 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class HandleArm extends Command {
-  private double motorPower;
 
-  public HandleArm(double power) {
+  public HandleArm() {
     requires(Robot.arm);
-
-    this.motorPower = power;
   }
 
   // Called just before this Command runs the first time
@@ -30,9 +27,9 @@ public class HandleArm extends Command {
   @Override
   protected void execute() {
     if (Robot.m_oi.isArmDownPressed()){
-        Robot.arm.armMotor(1);
+        Robot.arm.armMotor(-RobotMap.armPower);
     }else if(Robot.m_oi.isArmUpPressed()){
-        Robot.arm.armMotor(-1);
+        Robot.arm.armMotor(RobotMap.armPower);
     }
   }
 
