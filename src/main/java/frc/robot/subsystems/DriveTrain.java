@@ -24,9 +24,9 @@ public class DriveTrain extends PIDSubsystem {
                         motorEncoderR3;
 
     public DriveTrain() {
-        super(1, 0, 0, 0);
-        getPIDController().setAbsoluteTolerance(0.05);
-        getPIDController().setOutputRange(-1, 1);
+        super(1, 0, 0, 0); //Calls PIDSubsystem constructor. Makes a PID Loop with the values given. Constructor: PIDSubsytem(double p, double i, double d, double f);. 
+        getPIDController().setAbsoluteTolerance(0.05);//Sets margin of error for PID Loop
+        getPIDController().setOutputRange(-1, 1);//Sets min and max values to write
         imu = new ADIS16448_IMU();
         imu.calibrate();
 
@@ -50,14 +50,14 @@ public class DriveTrain extends PIDSubsystem {
         right2.follow(right1);
         right3.follow(right1);
 
-        setClosedLoopEnabled(false);
+        setClosedLoopEnabled(false);//Makes sure loop doesn't start when a new instance is made
     }
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new HandleDriveTrain());
+        setDefaultCommand(new HandleDriveTrain());//Calls HandleDriveTrain() on initialization
     }
-
+    
     public void drive(double l, double r) {
         left1.set(-l * 0.3);
         right1.set(r * 0.3);
@@ -73,7 +73,7 @@ public class DriveTrain extends PIDSubsystem {
     }
 
     public void setClosedLoopEnabled(boolean enabled) {
-        getPIDController().setEnabled(enabled);
+        getPIDController().setEnabled(enabled); //When called, you can make this true to activate the PID Loop
     }
 
     public boolean isClosedLoopEnabled() {
@@ -81,7 +81,7 @@ public class DriveTrain extends PIDSubsystem {
     }
 
     public void setHeadingTarget(double target) {
-        getPIDController().setSetpoint(target);
+        getPIDController().setSetpoint(target); // Sets the end goal for the PID Loop
     }
 
     public double getHeadingTarget() {
@@ -93,17 +93,17 @@ public class DriveTrain extends PIDSubsystem {
     }
 
     public boolean atHeadingTarget() {
-        return getPIDController().onTarget();
+        return getPIDController().onTarget(); // onTarget() returns true if the error is within the percentage of the total input range, determined by setTolerance.
     }
 
     @Override
     protected double returnPIDInput() {
-        return getHeading();
+        return getHeading(); // Feeds the loop the angle the Input for calculations. The angle that the robot is at when called
     }
 
     @Override
     protected void usePIDOutput(double output) {
-        drive(output, -output);
+        drive(output, -output); // Takes the output and applies it to the robot
     }
 
     @Override
