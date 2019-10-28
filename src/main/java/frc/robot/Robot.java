@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
 
     m_oi = new OI();
     drivetrain = new DriveTrain();
+    arm = new Arm();
     
     /* PD
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
