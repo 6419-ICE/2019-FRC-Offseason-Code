@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer; 
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain drivetrain;
   public static Arm arm;
   public static OI m_oi;
+  public static Compressor c;
 
   private final Timer m_timer = new Timer();
   private final Limelight m_Limelight = new Limelight();
@@ -51,6 +53,8 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     drivetrain = new DriveTrain();
     arm = new Arm();
+    c = new Compressor(0);
+    c.setClosedLoopControl(true);
     
     /* PD
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);

@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   //// CREATING BUTTONS
   private Joystick leftJoy, rightJoy;
-  private Button armUp, armDown;
+  private Button armUp, armDown, hookUp, hookDown;
 
   public OI() {
     this.leftJoy = new Joystick(RobotMap.joy1);
@@ -26,6 +26,8 @@ public class OI {
     
     this.armUp = new JoystickButton(rightJoy, RobotMap.arm1);
     this.armDown = new JoystickButton(rightJoy, RobotMap.arm2);
+    this.hookUp = new JoystickButton(leftJoy, RobotMap.arm1);
+    this.hookDown = new JoystickButton(leftJoy, RobotMap.arm2);
   }
 
   public Joystick getLeftJoy() {
@@ -36,6 +38,21 @@ public class OI {
     return rightJoy;
   };
 
+  public Button getHookUpBtn() {
+    return hookUp;
+  }
+
+  public Button getHookDownBtn() {
+    return hookDown;
+  }
+
+  public boolean isHookUpPressed() {
+    return hookUp.get();
+  }
+
+  public boolean isHookDownPressed () {
+    return hookDown.get();
+  }
   public Button getArmUpBtn() {
     return armUp;
   }

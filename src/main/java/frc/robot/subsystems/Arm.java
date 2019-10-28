@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 // import frc.robot.RobotMap;
@@ -9,10 +10,12 @@ import frc.robot.commands.HandleArm;
 
 public class Arm extends Subsystem {
     private PWMVictorSPX armMotor;  
+    private DoubleSolenoid hookSolenoid;
 
 
     public Arm() {
        armMotor = new PWMVictorSPX(0);
+       hookSolenoid = new DoubleSolenoid(0, 1);
     }
 
     @Override
@@ -23,6 +26,10 @@ public class Arm extends Subsystem {
 
     public void armMotor(double m){
         armMotor.set(m);
+    }
+
+    public void hookSolenoid(DoubleSolenoid.Value m){
+        hookSolenoid.set(m);
     }
     
     // Add methods
