@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
 
     m_oi = new OI();
     drivetrain = new DriveTrain();
+    arm = new Arm();
     
     /* PD
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -129,21 +130,13 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    /* Hatch Panel Checker */
-    m_oi.getArmUpBtn().whileActive(new HandleArm(RobotMap.armPower)); // Raise Hatch Panel
-    m_oi.getArmDownBtn().whileActive(new HandleArm(-RobotMap.armPower)); // Lower Hatch Panel
-
-
     /* PD
     Update_Limelight_Tracking();
-
         double steer = m_Controller.getX(Hand.kRight);
         double drive = -m_Controller.getY(Hand.kLeft);
         boolean auto = m_Controller.getAButton();
-
         steer *= 0.70;
         drive *= 0.70;
-
         if (auto)
         {
           if (m_LimelightHasValidTarget)
@@ -176,16 +169,13 @@ public class Robot extends TimedRobot {
     final double DRIVE_K = 0.26;                    // how hard to drive fwd toward the target
     final double DESIRED_TARGET_AREA = 13.0;        // Area of the target when the robot reaches the wall
     final double MAX_DRIVE = 0.7;                   // Simple speed limit so we don't drive too fast
-
     double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-
     boolean m_LimelightHasValidTarget;
     double m_LimelightDriveCommand;
     double m_LimelightSteerCommand;
-
     if (tv < 1.0)
     {
       m_LimelightHasValidTarget = false;
@@ -193,16 +183,12 @@ public class Robot extends TimedRobot {
       m_LimelightSteerCommand = 0.0;
       return;
     }
-
     m_LimelightHasValidTarget = true;
-
     // Start with proportional steering
     double steer_cmd = tx * STEER_K;
     m_LimelightSteerCommand = steer_cmd;
-
     // try to drive forward until the target area reaches our desired area
     double drive_cmd = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
-
     // don't let the robot drive too fast into the goal
     if (drive_cmd > MAX_DRIVE)
     {
