@@ -37,9 +37,8 @@ public class HandleArm extends Command {
         Robot.arm.hookSolenoid(Value.kForward);
     }else if(Robot.m_oi.isHookDownPressed()){
       Robot.arm.hookSolenoid(Value.kReverse);
-    }
-    else if(Robot.m_oi.isArmDownPressed() != true || Robot.m_oi.isHookUpPressed() != true ||Robot.m_oi.isHookDownPressed() != true || Robot.m_oi.isArmUpPressed() != true ){
-        isDone = true;
+    } else {
+       isDone = true;
     }
   }
 
