@@ -12,8 +12,8 @@ public class Forward extends Command{
    private final ADIS16448_IMU imu = new ADIS16448_IMU();
    private final double distance;
    private final double turningConstant = 0.5;
-   private double startingPosition;
    private double distancePerRotation = 4 * Math.PI;
+   private boolean isDone = false;
 
     public Forward(double d) {
         distance = d;
@@ -24,22 +24,25 @@ public class Forward extends Command{
     protected void initialize() {
         Robot.drivetrain.drive(0, 0); // Don't move on init
         timer.start();
-        startingPosition = Robot.drivetrain.motorEncoder.getPosition();
+        Robot.drivetrain.motorEncoderL1.setPosition(0);
+        imu.calibrate();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(distancePerRotation * startingPosition < distance){
+        if(distancePerRotation * Robot.drivetrain.motorEncoderL1.getPosition() < distance){
             double turningValue = imu.getAngle() * turningConstant;
             Robot.drivetrain.drive(0.5 - turningValue, 0.5 + turningValue); // TODO
+        } else {
+            isDone = true;
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return timer.get() < 2.0;
+        return isDone;
     }
 
     // Called once after isFinished returns true
