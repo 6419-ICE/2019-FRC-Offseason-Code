@@ -29,7 +29,7 @@ public class DeliverHatchPanel extends Command{
        if(timer.get() < 1){
           Robot.arm.armMotor(1);
        }else if(timer.get() > 1){
-          robot.arm.hookSolenoid(Value.kReverse);
+          Robot.arm.hookSolenoid(Value.kReverse);
        } else if(timer.get() > 1.3){
           isDone = true;
        }

@@ -44,8 +44,16 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   */
 
+  
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  SendableChooser<Command> m_chooser = new SendableChooser<>();  
+/*
+  private void smartDashboardCommand(){
+    m_chooser.setName("Auto Selector");
+    m_chooser.addOption("Autonomous", AutoGroup);
+    m_chooser = new SendableChooser<>();  
+  }
+  */
 
   @Override
   public void robotInit() {
@@ -55,6 +63,7 @@ public class Robot extends TimedRobot {
     arm = new Arm();
     c = new Compressor(0);
     c.setClosedLoopControl(true);
+    //smartDashboardCommand();
     
     /* PD
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);

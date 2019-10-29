@@ -59,8 +59,8 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     public void drive(double l, double r) {
-        left1.set(-l * 0.3);
-        right1.set(r * 0.3);
+        left1.set(l * 0.3);
+        right1.set(-r * 0.3);
     }
 
     public void stop() {
