@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   */
 
   public enum autoSelections {
-    AUTO_1;
+    AUTO_1,
     Auto_2;
   }
   
