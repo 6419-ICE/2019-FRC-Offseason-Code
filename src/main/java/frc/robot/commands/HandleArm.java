@@ -14,8 +14,12 @@ import frc.robot.RobotMap;
 
 public class HandleArm extends Command {
   private boolean isDone = false;
+  private double armPower;
+  private Value hookPosition; 
   
-  public HandleArm() {
+  public HandleArm(double a, Value h) {
+    this.armPower = a;
+    this.hookPosition = h
     requires(Robot.arm);
   }
 
@@ -29,18 +33,8 @@ public class HandleArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_oi.isArmDownPressed()){
-        Robot.arm.armMotor(-RobotMap.armPower);
-    }else if(Robot.m_oi.isArmUpPressed()){
-        Robot.arm.armMotor(RobotMap.armPower);
-    }else if(Robot.m_oi.isHookUpPressed()){
-        Robot.arm.hookSolenoid(Value.kForward);
-    }else if(Robot.m_oi.isHookDownPressed()){
-      Robot.arm.hookSolenoid(Value.kReverse);
-    } else {
-       Robot.arm.hookSolenoid(Value.kOff);
-       Robot.arm.armMotor(0);
-    }
+    Robot.arm.armMotor(armPower);
+    Robot.arm.hookSolenoid(hookPosition);
   }
 
   // Make this return true when this Command no longer needs to run execute()
