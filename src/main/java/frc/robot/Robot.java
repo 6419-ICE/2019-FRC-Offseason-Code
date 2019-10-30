@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 
   public enum autoSelections {
     AUTO_1,
-    Auto_2;
+    AUTO_2;
   }
   
   Command m_autonomousCommand;
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", null);
     m_chooser.addOption("Autonomous 1", autoSelections.AUTO_1);
     m_chooser.addOption("Autonomous 2", autoSelections.AUTO_2);
-    m_chooser.putData("Auto Selector", m_chooser);
+    SmartDashboard.putData("Auto Selector", m_chooser);
   }
 
   @Override
@@ -116,15 +116,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {    
-    private autoSelected;
+    final autoSelections autoSelected;
     //autoSelected = SmartDashboard.getData("Auto Selector", "Default"); - This should work too, use if other method stops working
     autoSelected = m_chooser.getSelected();
     // Select an Auto
     switch(autoSelected) { 
       case AUTO_1: 
-        m_autonomousCommand = new AutoGroup(autoSelected);
+        m_autonomousCommand = new AutoGroup(autoSelected.toString());
       case AUTO_2:
-        m_autonomousCommand = null;
+        m_autonomousCommand = new TurnToHeading(90);
       break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }

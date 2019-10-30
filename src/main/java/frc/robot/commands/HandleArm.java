@@ -19,7 +19,7 @@ public class HandleArm extends Command {
   
   public HandleArm(double a, Value h) {
     this.armPower = a;
-    this.hookPosition = h
+    this.hookPosition = h;
     requires(Robot.arm);
   }
 

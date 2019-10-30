@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,7 +27,7 @@ public class handleButtons {
     this.isHookUp = Robot.m_oi.isHookUpPressed();
     this.isHookDown = Robot.m_oi.isHookDownPressed();
     
-    this.armCommand = new HandleArm(0, Value.KOff);
+    this.armCommand = new HandleArm(0, Value.kOff);
   }
   
   public void checkButtons(){
@@ -37,12 +38,12 @@ public class handleButtons {
     }
     
     if (isHookUp){
-      hookValue = Value.kForWard;
+      hookValue = Value.kForward;
     } else if (isHookDown){
       hookValue = Value.kReverse;
     }
     
-    armCommand(armValue, hookValue).start();
+    this.armCommand = new HandleArm(armValue, hookValue);
   }
   
   
