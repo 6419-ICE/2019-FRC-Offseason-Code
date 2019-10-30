@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static OI m_oi;
   public static Compressor c;
+  public handleButtons buttonHandler;
 
   private final Timer m_timer = new Timer();
   private final Limelight m_Limelight = new Limelight();
@@ -68,6 +69,7 @@ public class Robot extends TimedRobot {
     drivetrain = new DriveTrain();
     arm = new Arm();
     c = new Compressor(0);
+    buttonHandler = new handleButtons();
     c.setClosedLoopControl(true);
     smartDashboardCommand();
     
@@ -176,6 +178,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    buttonHandler.checkButtons();
     Scheduler.getInstance().run();
   }
   
