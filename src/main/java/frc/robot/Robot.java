@@ -33,7 +33,6 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static OI m_oi;
   public static Compressor c;
-  public handleButtons buttonHandler;
 
   private final Timer m_timer = new Timer();
   private final Limelight m_Limelight = new Limelight();
@@ -47,7 +46,8 @@ public class Robot extends TimedRobot {
 
   public enum autoSelections {
     AUTO_1,
-    AUTO_2;
+    AUTO_2,
+    AUTO_3;
   }
   
   Command m_autonomousCommand;
@@ -59,6 +59,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", null);
     m_chooser.addOption("Autonomous 1", autoSelections.AUTO_1);
     m_chooser.addOption("Autonomous 2", autoSelections.AUTO_2);
+    m_chooser.addOption("Autonomous 3", autoSelections.AUTO_3);
     SmartDashboard.putData("Auto Selector", m_chooser);
   }
 
@@ -69,7 +70,6 @@ public class Robot extends TimedRobot {
     drivetrain = new DriveTrain();
     arm = new Arm();
     c = new Compressor(0);
-    buttonHandler = new handleButtons();
     c.setClosedLoopControl(true);
     smartDashboardCommand();
     
@@ -124,7 +124,9 @@ public class Robot extends TimedRobot {
       case AUTO_1: 
         m_autonomousCommand = new AutoGroup(autoSelected.toString());
       case AUTO_2:
-        m_autonomousCommand = new TurnToHeading(90);
+        m_autonomousCommand = new TurnToHeading(180);
+      case AUTO_3:
+        m_autonomousCommand = new Forward(5);
       break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }
@@ -147,7 +149,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    buttonHandler.checkButtons();
     Scheduler.getInstance().run();
 
     /* PD

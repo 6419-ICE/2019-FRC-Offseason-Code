@@ -31,7 +31,7 @@ public class DeliverHatchPanel extends Command{
        }else if(timer.get() > 1){
           Robot.arm.hookSolenoid(Value.kReverse);
        } else if(timer.get() > 1.3){
-          isDone = true;
+          isDone = false;
        }
     }
 

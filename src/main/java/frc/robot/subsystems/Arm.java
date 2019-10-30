@@ -21,7 +21,7 @@ public class Arm extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new HandleArm(0, Value.kOff));
+        setDefaultCommand(new HandleArm());
     }
     
 
