@@ -44,16 +44,22 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   */
 
+  public enum autoSelections {
+    AUTO_1;
+    Auto_2;
+  }
   
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();  
-/*
+  SendableChooser<autoSelections> m_chooser;  
+
   private void smartDashboardCommand(){
+    m_chooser = new SendableChooser<>();
     m_chooser.setName("Auto Selector");
-    m_chooser.addOption("Autonomous", AutoGroup);
-    m_chooser = new SendableChooser<>();  
+    m_chooser.setDefaultOption("Default Auto", null);
+    m_chooser.addOption("Autonomous 1", autoSelections.AUTO_1);
+    m_chooser.addOption("Autonomous 2", autoSelections.AUTO_2);
+    m_chooser.putData("Auto Selector", m_chooser);
   }
-  */
 
   @Override
   public void robotInit() {
@@ -63,7 +69,7 @@ public class Robot extends TimedRobot {
     arm = new Arm();
     c = new Compressor(0);
     c.setClosedLoopControl(true);
-    //smartDashboardCommand();
+    smartDashboardCommand();
     
     /* PD
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -107,19 +113,17 @@ public class Robot extends TimedRobot {
    * the switch structure below with additional strings & commands.
    */
   @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-    
-    
-    m_timer.reset();
-    m_timer.start();
-
-    String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-     
+  public void autonomousInit() {    
+    private autoSelected;
+    //autoSelected = SmartDashboard.getData("Auto Selector", "Default"); - This should work too, use if other method stops working
+    autoSelected = m_chooser.getSelected();
     // Select an Auto
     switch(autoSelected) { 
-      case "Auto": m_autonomousCommand = new AutoGroup(autoSelected);
-        break; 
+      case AUTO_1: 
+        m_autonomousCommand = new AutoGroup(autoSelected);
+      case AUTO_2:
+        m_autonomousCommand = null;
+      break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }
 
