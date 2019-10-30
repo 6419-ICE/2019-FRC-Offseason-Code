@@ -24,7 +24,7 @@ public class DriveTrain extends PIDSubsystem {
                         motorEncoderR3;
 
     public DriveTrain() {
-        super(1, 0, 0, 0); //Calls PIDSubsystem constructor. Makes a PID Loop with the values given. Constructor: PIDSubsytem(double p, double i, double d, double f);. 
+        super(1, 1, 1, 0); //Calls PIDSubsystem constructor. Makes a PID Loop with the values given. Constructor: PIDSubsytem(double p, double i, double d, double f);. 
         getPIDController().setAbsoluteTolerance(0.05);//Sets margin of error for PID Loop
         getPIDController().setOutputRange(-1, 1);//Sets min and max values to write
         imu = new ADIS16448_IMU();
@@ -103,7 +103,7 @@ public class DriveTrain extends PIDSubsystem {
 
     @Override
     protected void usePIDOutput(double output) {
-        drive(output, -output); // Takes the output and applies it to the robot
+        drive(output * .5, -output * .5); // Takes the output and applies it to the robot
     }
 
     @Override
