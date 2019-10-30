@@ -147,6 +147,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    buttonHandler.checkButtons();
     Scheduler.getInstance().run();
 
     /* PD
@@ -178,7 +179,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    buttonHandler.checkButtons();
     Scheduler.getInstance().run();
   }
   
