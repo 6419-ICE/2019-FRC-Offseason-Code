@@ -18,12 +18,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   //// CREATING BUTTONS
   private Joystick leftJoy, rightJoy;
-  private Button armUp, armDown, hookUp, hookDown;
+  private Button armUp, armDown, hookUp, hookDown, limelightButton;
 
   public OI() {
     this.leftJoy = new Joystick(RobotMap.joy1);
     this.rightJoy = new Joystick(RobotMap.joy2);
     
+    this.limelightButton = new JoystickButton(rightJoy, 5);
     this.armUp = new JoystickButton(rightJoy, RobotMap.arm1);
     this.armDown = new JoystickButton(rightJoy, RobotMap.arm2);
     this.hookUp = new JoystickButton(leftJoy, RobotMap.arm1);
@@ -68,7 +69,10 @@ public class OI {
   public boolean isArmDownPressed () {
     return armDown.get();
   }
-
+  
+  public Button limelightButton(){
+    return limelightButton; 
+  }
   //// TRIGGERING COMMANDS WITH BUTTONS
   // Start the command when the button is pressed and let it run the command
   // until it is finished as determined by it's isFinished method.
