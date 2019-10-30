@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 // import frc.robot.RobotMap;
@@ -20,7 +20,7 @@ public class Arm extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new HandleArm());
+        setDefaultCommand(new HandleArm(0, Value.kOff));
     }
     
 
@@ -28,7 +28,7 @@ public class Arm extends Subsystem {
         armMotor.set(m);
     }
 
-    public void hookSolenoid(DoubleSolenoid.Value m){
+    public void hookSolenoid(Value m){
         hookSolenoid.set(m);
     }
     
