@@ -17,26 +17,32 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
   //// CREATING BUTTONS
-  private Joystick leftJoy, rightJoy;
+  private Joystick leftJoy, rightJoy, armJoy;
   private Button armUp, armDown, hookUp, hookDown;
 
   public OI() {
     this.leftJoy = new Joystick(RobotMap.joy1);
     this.rightJoy = new Joystick(RobotMap.joy2);
+    this.armJoy = new Joystick(RobotMap.joy3);
     
-    this.armUp = new JoystickButton(rightJoy, RobotMap.arm1);
-    this.armDown = new JoystickButton(rightJoy, RobotMap.arm2);
-    this.hookUp = new JoystickButton(leftJoy, RobotMap.arm1);
-    this.hookDown = new JoystickButton(leftJoy, RobotMap.arm2);
+    /* ArmJoy Buttons */
+    this.armUp = new JoystickButton(armJoy, RobotMap.arm1); // Move arm w/ Magnetic Sensor
+    this.armDown = new JoystickButton(armJoy, RobotMap.arm2);
+    this.hookUp = new JoystickButton(armJoy, RobotMap.arm3); // Attach Hatch panel
+    this.hookDown = new JoystickButton(armJoy, RobotMap.arm4); // Release
   }
 
   public Joystick getLeftJoy() {
     return leftJoy;
-  };
+  }
 
   public Joystick getRightJoy() {
     return rightJoy;
-  };
+  }
+
+  public Joystick getArmJoy() {
+    return armJoy;
+  }
 
   public Button getHookUpBtn() {
     return hookUp;

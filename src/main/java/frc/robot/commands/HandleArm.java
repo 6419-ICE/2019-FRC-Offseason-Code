@@ -17,6 +17,9 @@ public class HandleArm extends Command {
   private double armPower;
   private Value hookPosition; 
   
+  private double coarseAdj;
+  private double fineAdj;
+
   public HandleArm() {
 
     requires(Robot.arm);
@@ -32,6 +35,16 @@ public class HandleArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    coarseAdj = Robot.m_oi.getArmJoy().getRawAxis(1); // Coarse Adjustment
+    fineAdj = Robot.m_oi.getArmJoy().getRawAxis(2);
+
+    /* Adjust arm w/ Joys */
+    if (fineAdj == 0) { // If fine is not in use
+      Robot.arm.armMotor(coarseAdj); // Safe to use coarse
+    } else if (coarseAdj == 0) { // If coarse is not in use
+      Robot.arm.armMotor(fineAdj); // Safe for fine
+    }
+
     if (Robot.m_oi.isArmDownPressed()){
       Robot.arm.armMotor(-RobotMap.armPower);
   }else if(Robot.m_oi.isArmUpPressed()){

@@ -25,11 +25,14 @@ public class RobotMap {
 
   /* Joystick Ports */
   public static final int joy1 = 0,
-                          joy2 = 1;
+                          joy2 = 1,
+                          joy3 = 2;
 
   /* Joystick Buttons */
-  public static final int arm1 = 3,
-                          arm2 = 4;
+  public static final int arm1 = 4,
+                          arm2 = 2,
+                          arm3 = 7,
+                          arm4 = 8;
 
   /* Default Autonomous Values */
   public static final double autoAngle = 90,
