@@ -33,9 +33,10 @@ public class Robot extends TimedRobot {
   public static Compressor c;
   public static boolean m_LimelightHasValidTarget;
   public static double m_LimelightDriveCommand;
+  public static boolean endDrive;
+  public static final Limelight m_Limelight = new Limelight();
 
   private final Timer m_timer = new Timer();
-  private final Limelight m_Limelight = new Limelight();
   
   /* PD
   private static final String kDefaultAuto = "Default";
@@ -124,7 +125,7 @@ public class Robot extends TimedRobot {
       case AUTO_1: 
         m_autonomousCommand = new AutoGroup(autoSelected.toString());
       case AUTO_2:
-        m_autonomousCommand = null;
+        m_autonomousCommand = new TurnToHeading(90);
       case AUTO_3:
         m_autonomousCommand = new Forward(5);
       break; 
@@ -150,24 +151,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    Update_Limelight_Tracking();
-        boolean auto = this.m_oi.limelightButton().get();
-
-        if (auto)
-        {
-          if (m_LimelightHasValidTarget)
-          {
-                this.drivetrain.drive(m_LimelightDriveCommand, m_LimelightDriveCommand);
-          }
-          else
-          {
-                this.drivetrain.drive(0, 0);
-          }
-        }
-        else
-        {
-          new HandleDriveTrain();
-        }
+    boolean auto = this.m_oi.limelightButton().get();
+    /*if(auto){ 
+      endDrive = true;
+      new LimelightAssist();
+    }*/
   }
   
 
@@ -177,37 +165,5 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
   }
   
-  public static void Update_Limelight_Tracking() { // PD
-    // Limelight control
-    // These numbers must be tuned for your Robot!  Be careful!
-    final double DRIVE_K = 0.3;                    // how hard to drive fwd toward the target
-    final double DESIRED_TARGET_AREA = 13.0;        // Area of the target when the robot reaches the wall
-    final double MAX_DRIVE = 0.7;                   // Simple speed limit so we don't drive too fast
-    double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-    double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-    Command m_turnCommand;
-    
-    if (tv < 1.0){
-      m_LimelightHasValidTarget = false;
-      m_LimelightDriveCommand = 0.0;
-      return;
-    }
-    m_LimelightHasValidTarget = true;
-    // Start with proportional steering
-    if(tx < 2 || tx > 2){
-      m_turnCommand = new TurnToHeading(tx);
-      m_turnCommand.start();
-    }
-    // try to drive forward until the target area reaches our desired area
-    double drive_cmd = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
-    // don't let the robot drive too fast into the goal
-    if (drive_cmd > MAX_DRIVE)
-    {
-      drive_cmd = MAX_DRIVE;
-    }
-    m_LimelightDriveCommand = drive_cmd;
-  }
   
 }

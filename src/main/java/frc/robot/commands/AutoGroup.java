@@ -14,9 +14,9 @@ public class AutoGroup extends CommandGroup{
         name = n;
 
         addSequential(new Forward(RobotMap.d1));
-        addSequential(new TurnToHeading(RobotMap.autoAngle));
-        addSequential(new Forward(RobotMap.d2));
+        addSequential(new LimelightAssist());
         addSequential(new DeliverHatchPanel());
+
     }
 
     public String getAutoName() {
