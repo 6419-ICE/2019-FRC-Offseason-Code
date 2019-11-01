@@ -36,8 +36,6 @@ public class Robot extends TimedRobot {
   public static boolean endDrive;
   public static final Limelight m_Limelight = new Limelight();
 
-  private final Timer m_timer = new Timer();
-
   public enum autoSelections {
     AUTO_1,
     AUTO_2,
