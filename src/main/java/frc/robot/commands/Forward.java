@@ -1,11 +1,9 @@
 package frc.robot.commands;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 /**
- * Move Forward to Cargo Ship
+ * Move Forward specified distance - Autonomous 1
  */
 public class Forward extends Command{
    private double distance;
@@ -26,7 +24,7 @@ public class Forward extends Command{
     @Override
     protected void execute() {
         if(-distancePerRotation * Robot.drivetrain.motorEncoderL1.getPosition() <= distance){
-            Robot.drivetrain.drive(-0.5, -0.5); // TODO should this work w/o negative pwr?
+            Robot.drivetrain.drive(-0.5, -0.5);
         } else {
             isDone = true;
         }

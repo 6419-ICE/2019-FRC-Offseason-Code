@@ -14,25 +14,42 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
+ * 
+ **************************************************************
+ * CONTROLS FOR ICE 6419 FRC 2019 OFFSEASON - YEETUS MAGEETUS *
+ **************************************************************
+ *
+ *  - Tank Drive Joysticks -> Move both forward, backward, left, or right for robot movement
+ *  - Game Controller Left Joystick -> Move Hatch Panel Arm up or down
+ *      -> Hold "X" button to slow arm motor
+ *  - "Y" button -> Move Arm up to next hatch panel level
+ *  - "A" button -> Move Arm down to previous hatch panel level
+ *  - "LB" button -> Release hatch panel
+ *  - "RB" button -> Attach hatch panel
  */
+
 public class OI {
   //// CREATING BUTTONS
   private Joystick leftJoy, rightJoy, armJoy;
-  private Button armUp, armDown, hookUp, hookDown, armCancel;
+  private Button armUp, armDown, armSlow, attachPanel, releasePanel;
 
   public OI() {
+    /* Joysticks */
     this.leftJoy = new Joystick(RobotMap.joy1);
     this.rightJoy = new Joystick(RobotMap.joy2);
     this.armJoy = new Joystick(RobotMap.joy3);
     
-    /* ArmJoy Buttons */
-    this.armUp = new JoystickButton(armJoy, RobotMap.arm1); // Move arm w/ Magnetic Sensor
+    /* Move Arm with Magnets */
+    this.armUp = new JoystickButton(armJoy, RobotMap.arm1); 
     this.armDown = new JoystickButton(armJoy, RobotMap.arm2);
-    this.armCancel = new JoystickButton(armJoy, RobotMap.arm5);
-    this.hookUp = new JoystickButton(armJoy, RobotMap.arm3); // Attach Hatch panel
-    this.hookDown = new JoystickButton(armJoy, RobotMap.arm4); // Release
+    this.armSlow = new JoystickButton(armJoy, RobotMap.arm5);
+
+    /* Hatch Panel */
+    this.releasePanel = new JoystickButton(armJoy, RobotMap.arm3); // Release
+    this.attachPanel = new JoystickButton(armJoy, RobotMap.arm4); // Attach Hatch panel
   }
 
+  /* Get states */
   public Joystick getLeftJoy() {
     return leftJoy;
   }
@@ -45,31 +62,12 @@ public class OI {
     return armJoy;
   }
 
-  public Button getHookUpBtn() {
-    return hookUp;
+  public boolean isReleasePressed() {
+    return releasePanel.get();
   }
 
-  public Button getHookDownBtn() {
-    return hookDown;
-  }
-
-  public boolean isHookUpPressed() {
-    return hookUp.get();
-  }
-
-  public boolean isHookDownPressed () {
-    return hookDown.get();
-  }
-  public Button getArmUpBtn() {
-    return armUp;
-  }
-
-  public Button getArmDownBtn() {
-    return armDown;
-  }
-
-  public Button getArmCancel() {
-    return armCancel;
+  public boolean isAttachPressed () {
+    return attachPanel.get();
   }
 
   public boolean isArmUpPressed() {
@@ -80,20 +78,7 @@ public class OI {
     return armDown.get();
   }
 
-  public boolean isArmCancelPressed() {
-    return armCancel.get();
+  public boolean isArmSlowPressed() {
+    return armSlow.get();
   }
-
-  //// TRIGGERING COMMANDS WITH BUTTONS
-  // Start the command when the button is pressed and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenPressed(new ExampleCommand());
-
-  // Run the command while the button is being held down and interrupt it once
-  // the button is released.
-  // button.whileHeld(new ExampleCommand());
-
-  // Start the command when the button is released and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenReleased(new ExampleCommand());
 }

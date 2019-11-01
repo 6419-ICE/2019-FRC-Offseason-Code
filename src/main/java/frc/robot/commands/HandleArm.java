@@ -16,11 +16,9 @@ import frc.robot.RobotMap;
 
 public class HandleArm extends Command {
   private boolean isDone = false;
-  private double armPower;
-  private Value hookPosition;
+  // private Value hookPosition;
 
-  private double coarseAdj;
-  private double fineAdj;
+  private double armAdjustment;
   private boolean isMovingUp = false;
   private boolean isMovingDown = false;
 
@@ -42,39 +40,39 @@ public class HandleArm extends Command {
     boolean state = Robot.arm.getMagnetDigitalInput();
     SmartDashboard.putBoolean("DB/LED 0", state);
 
-    coarseAdj = Robot.m_oi.getArmJoy().getRawAxis(1); // Coarse Adjustment
-    fineAdj = Robot.m_oi.getArmJoy().getRawAxis(2);
-    
+    armAdjustment = Robot.m_oi.getArmJoy().getRawAxis(1); // Joystick Adjustment value
 
-    if (Robot.m_oi.isArmDownPressed() && state && !isMovingDown) {
-      isMovingDown = true;
-    } else if (Robot.m_oi.isArmUpPressed() && state && !isMovingUp) {
-      isMovingUp = true;
+    /* Adjust the arm using the following one at a time */
+    if (!isMovingDown && !isMovingUp) {
+      if (Robot.m_oi.isArmSlowPressed()) {
+        Robot.arm.armMotor(armAdjustment * 0.3);
+      } else if (Robot.m_oi.isArmDownPressed() && state) {
+        isMovingDown = true;
+      } else if (Robot.m_oi.isArmUpPressed() && state) {
+        isMovingUp = true;
+      } else {
+        Robot.arm.armMotor(armAdjustment);
+      }
     }
 
-    if (Robot.m_oi.isHookUpPressed()) {
-      Robot.arm.hookSolenoid(Value.kForward);
-    } else if (Robot.m_oi.isHookDownPressed()) {
-      Robot.arm.hookSolenoid(Value.kReverse);
-    } else {
-      Robot.arm.hookSolenoid(Value.kOff);
-    }
-    if (Robot.m_oi.isArmCancelPressed()) {
-      Robot.arm.armMotor(0);
-      isMovingUp = false;
-      isMovingDown = false;
-    } else if (isMovingDown && state) {
+    /* Use buttons and magnetic sensor if not joystick */
+    if (isMovingDown && state) {
       Robot.arm.armMotor(RobotMap.armPower * 0.5);
     } else if (isMovingUp && state) {
       Robot.arm.armMotor(-RobotMap.armPower * 0.5);
-    }
-     else {
+    } else {
+      Robot.arm.armMotor(0.0);
+      isMovingUp = false;
       isMovingDown = false;
-      Robot.arm.armMotor((coarseAdj * 0.5) - 0.1);
-      // TODO make fine adjustment
-      //Robot.arm.armMotor(fineAdj * 0.5); 
-      //Robot.arm.armMotor(0.2);
-      
+    }
+
+    /* Attach/Release Hatch Panels */
+    if (Robot.m_oi.isAttachPressed()) {
+      Robot.arm.hookSolenoid(Value.kForward);
+    } else if (Robot.m_oi.isReleasePressed()) {
+      Robot.arm.hookSolenoid(Value.kReverse);
+    } else {
+      Robot.arm.hookSolenoid(Value.kOff);
     }
   }
 

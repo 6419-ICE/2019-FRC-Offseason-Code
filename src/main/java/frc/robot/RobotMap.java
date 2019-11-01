@@ -31,8 +31,8 @@ public class RobotMap {
   /* Joystick Buttons */
   public static final int arm1 = 4,
                           arm2 = 2,
-                          arm3 = 7,
-                          arm4 = 8,
+                          arm3 = 6,
+                          arm4 = 5,
                           arm5 = 1;
 
   /* Default Autonomous Values */
