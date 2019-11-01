@@ -123,11 +123,13 @@ public class Robot extends TimedRobot {
     switch(autoSelected) { 
       case AUTO_1: 
         m_autonomousCommand = new AutoGroup(autoSelected.toString());
+        break;
       case AUTO_2:
         m_autonomousCommand = new TurnToHeading(180);
+        break;
       case AUTO_3:
         m_autonomousCommand = new Forward(5);
-      break; 
+        break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }
 
