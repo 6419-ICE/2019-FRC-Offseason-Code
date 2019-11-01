@@ -9,14 +9,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class HandleArm extends Command {
   private boolean isDone = false;
-  private double armPower;
-  private Value hookPosition; 
-  
+  // private Value hookPosition;
+
+  private double armAdjustment;
+  private boolean isMovingUp = false;
+  private boolean isMovingDown = false;
+
   public HandleArm() {
 
     requires(Robot.arm);
@@ -32,18 +37,43 @@ public class HandleArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_oi.isArmDownPressed()){
-      Robot.arm.armMotor(-RobotMap.armPower);
-  }else if(Robot.m_oi.isArmUpPressed()){
-      Robot.arm.armMotor(RobotMap.armPower);
-  }else if(Robot.m_oi.isHookUpPressed()){
+    boolean state = Robot.arm.getMagnetDigitalInput();
+    SmartDashboard.putBoolean("DB/LED 0", state);
+
+    armAdjustment = Robot.m_oi.getArmJoy().getRawAxis(1); // Joystick Adjustment value
+
+    /* Adjust the arm using the following one at a time */
+    if (!isMovingDown && !isMovingUp) {
+      if (Robot.m_oi.isArmSlowPressed()) {
+        Robot.arm.armMotor(armAdjustment * 0.3);
+      } else if (Robot.m_oi.isArmDownPressed() && state) {
+        isMovingDown = true;
+      } else if (Robot.m_oi.isArmUpPressed() && state) {
+        isMovingUp = true;
+      } else {
+        Robot.arm.armMotor(armAdjustment);
+      }
+    }
+
+    /* Use buttons and magnetic sensor if not joystick */
+    if (isMovingDown && state) {
+      Robot.arm.armMotor(RobotMap.armPower * 0.5);
+    } else if (isMovingUp && state) {
+      Robot.arm.armMotor(-RobotMap.armPower * 0.5);
+    } else {
+      Robot.arm.armMotor(0.0);
+      isMovingUp = false;
+      isMovingDown = false;
+    }
+
+    /* Attach/Release Hatch Panels */
+    if (Robot.m_oi.isAttachPressed()) {
       Robot.arm.hookSolenoid(Value.kForward);
-  }else if(Robot.m_oi.isHookDownPressed()){
-    Robot.arm.hookSolenoid(Value.kReverse);
-  } else {
-     Robot.arm.hookSolenoid(Value.kOff);
-     Robot.arm.armMotor(0);
-  } 
+    } else if (Robot.m_oi.isReleasePressed()) {
+      Robot.arm.hookSolenoid(Value.kReverse);
+    } else {
+      Robot.arm.hookSolenoid(Value.kOff);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

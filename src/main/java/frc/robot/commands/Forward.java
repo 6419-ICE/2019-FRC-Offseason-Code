@@ -1,11 +1,9 @@
 package frc.robot.commands;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 /**
- * Move Forward to Cargo Ship
+ * Move Forward specified distance - Autonomous 1
  */
 public class Forward extends Command{
    private double distance;
@@ -25,8 +23,8 @@ public class Forward extends Command{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(distancePerRotation * Robot.drivetrain.motorEncoderL1.getPosition() < distance){
-            Robot.drivetrain.drive(-0.5, -0.5); 
+        if(-distancePerRotation * Robot.drivetrain.motorEncoderL1.getPosition() <= distance){
+            Robot.drivetrain.drive(-0.5, -0.5);
         } else {
             isDone = true;
         }
@@ -41,6 +39,7 @@ public class Forward extends Command{
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        Robot.drivetrain.drive(0, 0);
     }
 
     // Called when another command which requires one or more of the same

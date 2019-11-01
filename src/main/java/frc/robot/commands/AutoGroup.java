@@ -13,6 +13,7 @@ public class AutoGroup extends CommandGroup{
     public AutoGroup(String n) {
         name = n;
 
+        /* Add Auto Commands to Sequence based on delivery location */
         addSequential(new Forward(RobotMap.d1));
         addSequential(new LimelightAssist());
         addSequential(new DeliverHatchPanel());
