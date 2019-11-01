@@ -9,6 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -35,6 +37,9 @@ public class HandleArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    boolean state = Robot.arm.getMagnetDigitalInput();
+    SmartDashboard.putBoolean("DB/LED 0", state);
+
     coarseAdj = Robot.m_oi.getArmJoy().getRawAxis(1); // Coarse Adjustment
     fineAdj = Robot.m_oi.getArmJoy().getRawAxis(2);
 

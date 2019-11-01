@@ -41,4 +41,8 @@ public class RobotMap {
 
   /* Hatch Panel Arm Fixed Power */
   public static final double armPower = 1.0;
+
+  /* Hall Effect Sensor Port */
+  public static final int sensorPrt = 0;
+
 }
