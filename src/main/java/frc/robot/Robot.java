@@ -31,7 +31,8 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static OI m_oi;
   public static Compressor c;
-  public handleButtons buttonHandler;
+  public static boolean m_LimelightHasValidTarget;
+  public static double m_LimelightDriveCommand;
 
   private final Timer m_timer = new Timer();
   private final Limelight m_Limelight = new Limelight();
@@ -45,7 +46,8 @@ public class Robot extends TimedRobot {
 
   public enum autoSelections {
     AUTO_1,
-    Auto_2;
+    AUTO_2,
+    AUTO_3;
   }
   
   Command m_autonomousCommand;
@@ -57,7 +59,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", null);
     m_chooser.addOption("Autonomous 1", autoSelections.AUTO_1);
     m_chooser.addOption("Autonomous 2", autoSelections.AUTO_2);
-    m_chooser.putData("Auto Selector", m_chooser);
+    m_chooser.addOption("Autonomous 3", autoSelections.AUTO_3);
+    SmartDashboard.putData("Auto Selector", m_chooser);
   }
 
   @Override
@@ -67,7 +70,6 @@ public class Robot extends TimedRobot {
     drivetrain = new DriveTrain();
     arm = new Arm();
     c = new Compressor(0);
-    buttonHandler = new handleButtons();
     c.setClosedLoopControl(true);
     smartDashboardCommand();
     
@@ -114,15 +116,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {    
-    private autoSelected;
+    final autoSelections autoSelected;
     //autoSelected = SmartDashboard.getData("Auto Selector", "Default"); - This should work too, use if other method stops working
     autoSelected = m_chooser.getSelected();
     // Select an Auto
     switch(autoSelected) { 
       case AUTO_1: 
-        m_autonomousCommand = new AutoGroup(autoSelected);
+        m_autonomousCommand = new AutoGroup(autoSelected.toString());
       case AUTO_2:
         m_autonomousCommand = null;
+      case AUTO_3:
+        m_autonomousCommand = new Forward(5);
       break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }
@@ -145,7 +149,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    buttonHandler.checkButtons();
     Scheduler.getInstance().run();
     Update_Limelight_Tracking();
         boolean auto = this.m_oi.limelightButton().get();
@@ -154,9 +157,6 @@ public class Robot extends TimedRobot {
         {
           if (m_LimelightHasValidTarget)
           {
-                if (HandleDriveTrain().isRunning){
-                  HandleDriveTrain().cancel(); 
-                }
                 this.drivetrain.drive(m_LimelightDriveCommand, m_LimelightDriveCommand);
           }
           else
@@ -166,12 +166,11 @@ public class Robot extends TimedRobot {
         }
         else
         {
-          HandleDriveTrain().start();
+          new HandleDriveTrain();
         }
   }
   
 
-  }
 
   @Override
   public void testPeriodic() {
@@ -188,12 +187,9 @@ public class Robot extends TimedRobot {
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-    boolean m_LimelightHasValidTarget;
-    double m_LimelightDriveCommand;
     Command m_turnCommand;
     
-    if (tv < 1.0)
-    {
+    if (tv < 1.0){
       m_LimelightHasValidTarget = false;
       m_LimelightDriveCommand = 0.0;
       return;
@@ -201,7 +197,7 @@ public class Robot extends TimedRobot {
     m_LimelightHasValidTarget = true;
     // Start with proportional steering
     if(tx < 2 || tx > 2){
-      m_turnCommand = new TurnToHeading(tx)
+      m_turnCommand = new TurnToHeading(tx);
       m_turnCommand.start();
     }
     // try to drive forward until the target area reaches our desired area
