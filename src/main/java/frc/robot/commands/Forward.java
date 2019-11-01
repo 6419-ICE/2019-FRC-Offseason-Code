@@ -8,32 +8,25 @@ import frc.robot.Robot;
  * Move Forward to Cargo Ship
  */
 public class Forward extends Command{
-   private final Timer timer = new Timer();
-   private final ADIS16448_IMU imu = new ADIS16448_IMU();
-   private final double distance;
-   private final double turningConstant = 0.5;
+   private double distance;
    private double distancePerRotation = 4 * Math.PI;
    private boolean isDone = false;
 
     public Forward(double d) {
-        distance = d;
-        
+        this.distance = d;
     }
 
     @Override
     protected void initialize() {
         Robot.drivetrain.drive(0, 0); // Don't move on init
-        timer.start();
         Robot.drivetrain.motorEncoderL1.setPosition(0);
-        imu.calibrate();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
         if(distancePerRotation * Robot.drivetrain.motorEncoderL1.getPosition() < distance){
-            double turningValue = imu.getAngle() * turningConstant;
-            Robot.drivetrain.drive(0.5 - turningValue, 0.5 + turningValue); // TODO
+            Robot.drivetrain.drive(-0.5, -0.5); 
         } else {
             isDone = true;
         }
@@ -48,7 +41,6 @@ public class Forward extends Command{
     // Called once after isFinished returns true
     @Override
     protected void end() {
-      Robot.drivetrain.stop();
     }
 
     // Called when another command which requires one or more of the same

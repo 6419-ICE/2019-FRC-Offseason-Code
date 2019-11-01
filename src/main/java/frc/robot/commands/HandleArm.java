@@ -17,9 +17,8 @@ public class HandleArm extends Command {
   private double armPower;
   private Value hookPosition; 
   
-  public HandleArm(double a, Value h) {
-    this.armPower = a;
-    this.hookPosition = h
+  public HandleArm() {
+
     requires(Robot.arm);
   }
 
@@ -33,8 +32,18 @@ public class HandleArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.arm.armMotor(armPower);
-    Robot.arm.hookSolenoid(hookPosition);
+    if (Robot.m_oi.isArmDownPressed()){
+      Robot.arm.armMotor(-RobotMap.armPower);
+  }else if(Robot.m_oi.isArmUpPressed()){
+      Robot.arm.armMotor(RobotMap.armPower);
+  }else if(Robot.m_oi.isHookUpPressed()){
+      Robot.arm.hookSolenoid(Value.kForward);
+  }else if(Robot.m_oi.isHookDownPressed()){
+    Robot.arm.hookSolenoid(Value.kReverse);
+  } else {
+     Robot.arm.hookSolenoid(Value.kOff);
+     Robot.arm.armMotor(0);
+  } 
   }
 
   // Make this return true when this Command no longer needs to run execute()
