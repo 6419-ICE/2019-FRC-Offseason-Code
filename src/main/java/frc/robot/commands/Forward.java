@@ -25,7 +25,7 @@ public class Forward extends Command{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(distancePerRotation * Robot.drivetrain.motorEncoderL1.getPosition() < -distance){
+        if(-distancePerRotation * Robot.drivetrain.motorEncoderL1.getPosition() <= distance){
             Robot.drivetrain.drive(-0.5, -0.5); // TODO should this work w/o negative pwr?
         } else {
             isDone = true;

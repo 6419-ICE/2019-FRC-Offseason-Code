@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   //// CREATING BUTTONS
   private Joystick leftJoy, rightJoy, armJoy;
-  private Button armUp, armDown, hookUp, hookDown;
+  private Button armUp, armDown, hookUp, hookDown, armCancel;
 
   public OI() {
     this.leftJoy = new Joystick(RobotMap.joy1);
@@ -28,6 +28,7 @@ public class OI {
     /* ArmJoy Buttons */
     this.armUp = new JoystickButton(armJoy, RobotMap.arm1); // Move arm w/ Magnetic Sensor
     this.armDown = new JoystickButton(armJoy, RobotMap.arm2);
+    this.armCancel = new JoystickButton(armJoy, RobotMap.arm5);
     this.hookUp = new JoystickButton(armJoy, RobotMap.arm3); // Attach Hatch panel
     this.hookDown = new JoystickButton(armJoy, RobotMap.arm4); // Release
   }
@@ -67,12 +68,20 @@ public class OI {
     return armDown;
   }
 
+  public Button getArmCancel() {
+    return armCancel;
+  }
+
   public boolean isArmUpPressed() {
     return armUp.get();
   }
 
-  public boolean isArmDownPressed () {
+  public boolean isArmDownPressed() {
     return armDown.get();
+  }
+
+  public boolean isArmCancelPressed() {
+    return armCancel.get();
   }
 
   //// TRIGGERING COMMANDS WITH BUTTONS

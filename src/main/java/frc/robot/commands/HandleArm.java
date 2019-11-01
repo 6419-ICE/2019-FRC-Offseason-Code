@@ -17,10 +17,12 @@ import frc.robot.RobotMap;
 public class HandleArm extends Command {
   private boolean isDone = false;
   private double armPower;
-  private Value hookPosition; 
-  
+  private Value hookPosition;
+
   private double coarseAdj;
   private double fineAdj;
+  private boolean isMovingUp = false;
+  private boolean isMovingDown = false;
 
   public HandleArm() {
 
@@ -42,26 +44,38 @@ public class HandleArm extends Command {
 
     coarseAdj = Robot.m_oi.getArmJoy().getRawAxis(1); // Coarse Adjustment
     fineAdj = Robot.m_oi.getArmJoy().getRawAxis(2);
+    
 
-    /* Adjust arm w/ Joys */
-    if (fineAdj == 0) { // If fine is not in use
-      Robot.arm.armMotor(coarseAdj); // Safe to use coarse
-    } else if (coarseAdj == 0) { // If coarse is not in use
-      Robot.arm.armMotor(fineAdj); // Safe for fine
+    if (Robot.m_oi.isArmDownPressed() && state && !isMovingDown) {
+      isMovingDown = true;
+    } else if (Robot.m_oi.isArmUpPressed() && state && !isMovingUp) {
+      isMovingUp = true;
     }
 
-    if (Robot.m_oi.isArmDownPressed()){
-      Robot.arm.armMotor(-RobotMap.armPower);
-  }else if(Robot.m_oi.isArmUpPressed()){
-      Robot.arm.armMotor(RobotMap.armPower);
-  }else if(Robot.m_oi.isHookUpPressed()){
+    if (Robot.m_oi.isHookUpPressed()) {
       Robot.arm.hookSolenoid(Value.kForward);
-  }else if(Robot.m_oi.isHookDownPressed()){
-    Robot.arm.hookSolenoid(Value.kReverse);
-  } else {
-     Robot.arm.hookSolenoid(Value.kOff);
-     Robot.arm.armMotor(0);
-  } 
+    } else if (Robot.m_oi.isHookDownPressed()) {
+      Robot.arm.hookSolenoid(Value.kReverse);
+    } else {
+      Robot.arm.hookSolenoid(Value.kOff);
+    }
+    if (Robot.m_oi.isArmCancelPressed()) {
+      Robot.arm.armMotor(0);
+      isMovingUp = false;
+      isMovingDown = false;
+    } else if (isMovingDown && state) {
+      Robot.arm.armMotor(RobotMap.armPower * 0.5);
+    } else if (isMovingUp && state) {
+      Robot.arm.armMotor(-RobotMap.armPower * 0.5);
+    }
+     else {
+      isMovingDown = false;
+      Robot.arm.armMotor((coarseAdj * 0.5) - 0.1);
+      // TODO make fine adjustment
+      //Robot.arm.armMotor(fineAdj * 0.5); 
+      //Robot.arm.armMotor(0.2);
+      
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

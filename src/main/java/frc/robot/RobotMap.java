@@ -32,7 +32,8 @@ public class RobotMap {
   public static final int arm1 = 4,
                           arm2 = 2,
                           arm3 = 7,
-                          arm4 = 8;
+                          arm4 = 8,
+                          arm5 = 1;
 
   /* Default Autonomous Values */
   public static final double autoAngle = 90,

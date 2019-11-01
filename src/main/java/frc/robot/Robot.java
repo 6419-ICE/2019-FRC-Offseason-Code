@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
         m_autonomousCommand = new TurnToHeading(180);
         break;
       case AUTO_3:
-        m_autonomousCommand = new Forward(5);
+        m_autonomousCommand = new Forward(60);
         break; 
      // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
     }
