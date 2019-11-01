@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-// import frc.robot.subsystems.Limelight.LightMode;
-// import edu.wpi.first.networktables.*; //PD
+import frc.robot.subsystems.Limelight.LightMode;
+import edu.wpi.first.networktables.*; 
 
 /* TODO TEST WITH THE ROBOT: 
 *  - Check various arm powers in HandleArm
@@ -30,6 +30,13 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static OI m_oi;
   public static Compressor c;
+  
+  public static boolean m_LimelightHasValidTarget;
+  public static double m_LimelightDriveCommand;
+  public static boolean endDrive;
+  public static final Limelight m_Limelight = new Limelight();
+
+  private final Timer m_timer = new Timer();
 
   public enum autoSelections {
     AUTO_1,
@@ -124,6 +131,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    boolean auto = this.m_oi.limelightButton().get();
+    /*if(auto){ 
+      endDrive = true;
+      new LimelightAssist();
+    }*/
   }
 
   @Override

@@ -15,9 +15,9 @@ public class AutoGroup extends CommandGroup{
 
         /* Add Auto Commands to Sequence based on delivery location */
         addSequential(new Forward(RobotMap.d1));
-        addSequential(new TurnToHeading(RobotMap.autoAngle));
-        addSequential(new Forward(RobotMap.d2));
+        addSequential(new LimelightAssist());
         addSequential(new DeliverHatchPanel());
+
     }
 
     public String getAutoName() {

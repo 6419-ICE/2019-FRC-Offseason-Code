@@ -29,16 +29,18 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 
 public class OI {
-  //// CREATING BUTTONS
+  // CREATING BUTTONS
   private Joystick leftJoy, rightJoy, armJoy;
-  private Button armUp, armDown, armSlow, attachPanel, releasePanel;
+  private Button armUp, armDown, armSlow, attachPanel, releasePanel, limelightButton;
 
   public OI() {
     /* Joysticks */
     this.leftJoy = new Joystick(RobotMap.joy1);
     this.rightJoy = new Joystick(RobotMap.joy2);
     this.armJoy = new Joystick(RobotMap.joy3);
-    
+
+    this.limelightButton = new JoystickButton(rightJoy, 5);
+
     /* Move Arm with Magnets */
     this.armUp = new JoystickButton(armJoy, RobotMap.arm1); 
     this.armDown = new JoystickButton(armJoy, RobotMap.arm2);
@@ -76,6 +78,10 @@ public class OI {
 
   public boolean isArmDownPressed() {
     return armDown.get();
+  }
+  
+  public Button limelightButton(){
+    return limelightButton; 
   }
 
   public boolean isArmSlowPressed() {
