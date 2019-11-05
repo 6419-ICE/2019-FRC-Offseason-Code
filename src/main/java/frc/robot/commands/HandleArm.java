@@ -41,29 +41,42 @@ public class HandleArm extends Command {
     SmartDashboard.putBoolean("DB/LED 0", state);
 
     armAdjustment = Robot.m_oi.getArmJoy().getRawAxis(1); // Joystick Adjustment value
+    boolean armAdjusting = Math.abs(armAdjustment) > 0.1;
+
+    /*if (Robot.m_oi.isArmSlowPressed()) {
+      Robot.arm.armMotor(armAdjustment * 0.3);
+    } else {
+      Robot.arm.armMotor(armAdjustment);
+    }*/
 
     /* Adjust the arm using the following one at a time */
     if (!isMovingDown && !isMovingUp) {
       if (Robot.m_oi.isArmSlowPressed()) {
         Robot.arm.armMotor(armAdjustment * 0.3);
       } else if (Robot.m_oi.isArmDownPressed() && state) {
+        System.out.println("Moving Down");
         isMovingDown = true;
       } else if (Robot.m_oi.isArmUpPressed() && state) {
+        System.out.println("Moving Up");
         isMovingUp = true;
       } else {
         Robot.arm.armMotor(armAdjustment);
       }
     }
 
+    if(!state){
+      isMovingDown = false;
+      isMovingUp = false;
+    }
+
     /* Use buttons and magnetic sensor if not joystick */
     if (isMovingDown && state) {
-      Robot.arm.armMotor(RobotMap.armPower * 0.5);
+      Robot.arm.armMotor(RobotMap.armPower);
     } else if (isMovingUp && state) {
-      Robot.arm.armMotor(-RobotMap.armPower * 0.5);
-    } else {
-      Robot.arm.armMotor(0.0);
-      isMovingUp = false;
-      isMovingDown = false;
+      Robot.arm.armMotor(-RobotMap.armPower);
+    } else if(!armAdjusting && state && !isMovingDown && !isMovingUp){
+      Robot.arm.armMotor(-0.1);
+
     }
 
     /* Attach/Release Hatch Panels */

@@ -61,7 +61,7 @@ public class LimelightAssist extends Command {
     // Limelight control
     // These numbers must be tuned for your Robot!  Be careful!
     final double DRIVE_K = 0.3;                    // how hard to drive fwd toward the target
-    final double DESIRED_TARGET_AREA = 13.0;        // Area of the target when the robot reaches the wall
+    final double DESIRED_TARGET_AREA = 8.0;        // Area of the target when the robot reaches the wall
     final double MAX_DRIVE = 0.7;                   // Simple speed limit so we don't drive too fast
     boolean tv = Robot.m_Limelight.canSeeTarget();
     double tx = Robot.m_Limelight.getHorizontalAngle();

@@ -26,18 +26,19 @@ public class RobotMap {
   /* Joystick Ports */
   public static final int joy1 = 0,
                           joy2 = 1,
-                          joy3 = 2;
+                          joy3 = 2,
+                          joy4 = 5; // Button for Limelight
 
   /* Joystick Buttons */
   public static final int arm1 = 4,
-                          arm2 = 2,
+                          arm2 = 1,
                           arm3 = 6,
                           arm4 = 5,
-                          arm5 = 1;
+                          arm5 = 3;
 
   /* Default Autonomous Values */
   public static final double autoAngle = 90,
-                          d1 = 0,
+                          d1 = 40,
                           d2 = 0;
 
   /* Hatch Panel Arm Fixed Power */

@@ -5,15 +5,19 @@ import frc.robot.commands.HandleDriveTrain;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 public class DriveTrain extends PIDSubsystem {
 
     private ADIS16448_IMU imu;
+    
+    private double speedLimit;
 
     private CANSparkMax left1, left2, left3, right1, right2, right3;
     public CANEncoder   motorEncoderL1,
@@ -22,6 +26,9 @@ public class DriveTrain extends PIDSubsystem {
                         motorEncoderR1,
                         motorEncoderR2,
                         motorEncoderR3;
+    
+    public CANPIDController leftController,
+                            rightController;
 
     public DriveTrain() {
         super(0.04, 0.0, 0.8, 0); //Calls PIDSubsystem constructor. Makes a PID Loop with the values given. Constructor: PIDSubsytem(double p, double i, double d, double f);. 
@@ -52,6 +59,12 @@ public class DriveTrain extends PIDSubsystem {
         
 
         setClosedLoopEnabled(false);//Makes sure loop doesn't start when a new instance is made
+
+        leftController = left1.getPIDController();
+        rightController = right1.getPIDController();
+
+        leftController.setP(0.2);
+        rightController.setP(0.2);
     }
 
     @Override
@@ -60,8 +73,8 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     public void drive(double l, double r) {
-        left1.set(l * 0.3);
-        right1.set(-r * 0.3);
+        left1.set(-l);
+        right1.set(r);
     }
 
     public void stop() {
@@ -112,6 +125,17 @@ public class DriveTrain extends PIDSubsystem {
         builder.addDoubleProperty("Heading", this::getHeading, null);
         builder.addDoubleProperty("L Pos", this.motorEncoderL1::getPosition, null);
         builder.addDoubleProperty("R Pos", this.motorEncoderR1::getPosition, null);
+        builder.addDoubleProperty("Speed Limit", () -> {
+            return speedLimit;
+        }, (value) -> {
+            speedLimit = value;
+        });
+        builder.addDoubleProperty("L1 Temp", left1::getMotorTemperature, null);
+        builder.addDoubleProperty("L2 Temp", left2::getMotorTemperature, null);
+        builder.addDoubleProperty("L3 Temp", left3::getMotorTemperature, null);
+        builder.addDoubleProperty("R1 Temp", right1::getMotorTemperature, null);
+        builder.addDoubleProperty("R2 Temp", right2::getMotorTemperature, null);
+        builder.addDoubleProperty("R3 Temp", right3::getMotorTemperature, null);
         super.initSendable(builder);
     }
 }

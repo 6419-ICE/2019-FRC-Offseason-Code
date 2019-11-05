@@ -8,12 +8,14 @@ Created 3/9/19 by christopher.johnson
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Limelight extends Subsystem {
+public class Limelight extends Subsystem implements PIDSource {
 
     public enum LightMode {
         DEFAULT,
@@ -97,7 +99,7 @@ public class Limelight extends Subsystem {
         tv = table.getEntry("tv");
         ta = table.getEntry("ta");
         setCameraMode(CameraMode.DRIVER_CAMERA);
-        setLightMode(LightMode.DEFAULT);
+        setLightMode(LightMode.OFF);
     }
 
     @Override
@@ -153,6 +155,8 @@ public class Limelight extends Subsystem {
         }
     }
 
+
+
     @Override
     public void initSendable(SendableBuilder builder) {
         setName("Limelight");
@@ -163,16 +167,31 @@ public class Limelight extends Subsystem {
         lightModeSendableChooser = new SendableChooser<>();
         lightModeSendableChooser.setName("Light Mode");
         lightModeSendableChooser.setSubsystem(getName());
-        lightModeSendableChooser.setDefaultOption(LightMode.DEFAULT.toString(), LightMode.DEFAULT);
-        lightModeSendableChooser.addOption(LightMode.OFF.toString(), LightMode.OFF);
+        lightModeSendableChooser.addOption(LightMode.DEFAULT.toString(), LightMode.DEFAULT);
+        lightModeSendableChooser.setDefaultOption(LightMode.OFF.toString(), LightMode.OFF);
         lightModeSendableChooser.addOption(LightMode.BLINK.toString(), LightMode.BLINK);
         lightModeSendableChooser.addOption(LightMode.ON.toString(), LightMode.ON);
         SmartDashboard.putData(String.format("%s - %s", getName(), lightModeSendableChooser.getName()), lightModeSendableChooser);
         cameraModeSendableChooser = new SendableChooser<>();
         cameraModeSendableChooser.setName("Camera Mode");
-        cameraModeSendableChooser.setDefaultOption(CameraMode.VISION.toString(), CameraMode.VISION);
-        cameraModeSendableChooser.addOption(CameraMode.DRIVER_CAMERA.toString(), CameraMode.DRIVER_CAMERA);
+        cameraModeSendableChooser.setDefaultOption(CameraMode.DRIVER_CAMERA.toString(), CameraMode.DRIVER_CAMERA);
+        cameraModeSendableChooser.addOption(CameraMode.VISION.toString(), CameraMode.VISION);
         SmartDashboard.putData(String.format("%s - %s", getName(), cameraModeSendableChooser.getName()), cameraModeSendableChooser);
         super.initSendable(builder);
     }
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        return PIDSourceType.kDisplacement;
+    }
+
+    @Override
+    public double pidGet() {
+        return getHorizontalAngle();
+	}
 }

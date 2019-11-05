@@ -39,7 +39,7 @@ public class OI {
     this.rightJoy = new Joystick(RobotMap.joy2);
     this.armJoy = new Joystick(RobotMap.joy3);
 
-    this.limelightButton = new JoystickButton(rightJoy, 5);
+    this.limelightButton = new JoystickButton(rightJoy, RobotMap.joy4);
 
     /* Move Arm with Magnets */
     this.armUp = new JoystickButton(armJoy, RobotMap.arm1); 

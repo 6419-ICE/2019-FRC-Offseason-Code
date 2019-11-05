@@ -7,51 +7,68 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.Utilities;
 
-/**
- * Handle the Drivetrain
- */
-public class HandleDriveTrain extends Command{
+public class LimelightTargeting extends Command implements PIDOutput {
+  private PIDController pid;
+  private volatile double pidOutput;
 
-  public HandleDriveTrain() {
-    requires(Robot.drivetrain);
+  private final static double NOMINAL_SPEED = 0.1;
+
+  public LimelightTargeting() {
+    this(0);
   }
 
+  public LimelightTargeting(double targetOffset) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.m_Limelight);
+    requires(Robot.drivetrain);
+    pid = new PIDController(0.04, 0, 0, Robot.m_Limelight, this);
+    pid.disable();
+    pid.setSetpoint(targetOffset);
+    pid.setAbsoluteTolerance(3);
+  }
+
+  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      Robot.drivetrain.drive(0, 0); // Don't move on init
+    pid.setEnabled(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (!Robot.inAuto()) {
-      Robot.drivetrain.drive(-1 * Utilities.applyDeadband(Robot.m_oi.getLeftJoy().getRawAxis(1), 0.1),
-                             -1 * Utilities.applyDeadband(Robot.m_oi.getRightJoy().getRawAxis(1), 0.1)); // Drive with Joysticks
-    }
+    Robot.drivetrain.drive(pidOutput, -pidOutput);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.endDrive){
-      return true;
-    } else{
-      return false;
-    }
+    return pid.onTarget();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    pid.disable();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
+  }
+
+  @Override
+  public void pidWrite(double output) {
+    pidOutput = output;
+    if (Math.abs(pidOutput) < NOMINAL_SPEED) {
+      pidOutput = Math.copySign(NOMINAL_SPEED, pidOutput);
+    }
   }
 }

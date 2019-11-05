@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.Limelight.LightMode;
-import edu.wpi.first.networktables.*; 
 
 /* TODO TEST WITH THE ROBOT: 
 *  - Check various arm powers in HandleArm
@@ -30,22 +28,20 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static OI m_oi;
   public static Compressor c;
-  
+
   public static boolean m_LimelightHasValidTarget;
   public static double m_LimelightDriveCommand;
   public static boolean endDrive;
   public static final Limelight m_Limelight = new Limelight();
 
   public enum autoSelections {
-    AUTO_1,
-    AUTO_2,
-    AUTO_3;
+    AUTO_1, AUTO_2, AUTO_3;
   }
-  
-  Command m_autonomousCommand;
-  SendableChooser<autoSelections> m_chooser;  
 
-  private void smartDashboardCommand(){
+  private static Command m_autonomousCommand;
+  SendableChooser<autoSelections> m_chooser;
+
+  private void smartDashboardCommand() {
     m_chooser = new SendableChooser<>();
     m_chooser.setName("Auto Selector");
     m_chooser.setDefaultOption("Default Auto", null);
@@ -92,28 +88,36 @@ public class Robot extends TimedRobot {
    * the switch structure below with additional strings & commands.
    */
   @Override
-  public void autonomousInit() {    
+  public void autonomousInit() {
     final autoSelections autoSelected;
-    //autoSelected = SmartDashboard.getData("Auto Selector", "Default"); - This should work too, use if other method stops working
+    // autoSelected = SmartDashboard.getData("Auto Selector", "Default"); - This
+    // should work too, use if other method stops working
     autoSelected = m_chooser.getSelected();
-    // Select an Auto
-    switch(autoSelected) { 
-      case AUTO_1: 
+    if (autoSelected != null) {
+      // Select an Auto
+      switch (autoSelected) {
+      case AUTO_1:
         m_autonomousCommand = new AutoGroup(autoSelected.toString());
         break;
       case AUTO_2:
         m_autonomousCommand = new TurnToHeading(180);
         break;
       case AUTO_3:
-        m_autonomousCommand = new Forward(60);
-        break; 
-     // case "Default Auto": default: Command m_autonomousCommand = new ExampleCommand(); 
+        m_autonomousCommand = new Forward(100);
+        break;
+      default:
+        m_autonomousCommand = null;
+        break;
+      // case "Default Auto": default: Command m_autonomousCommand = new
+      // ExampleCommand();
+      }
+
+      // schedule the autonomous command (example)
+      if (m_autonomousCommand != null) {
+        m_autonomousCommand.start();
+      }
     }
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
-    }
   }
 
   @Override
@@ -123,21 +127,24 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    
+
   }
 
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     boolean auto = this.m_oi.limelightButton().get();
-    /*if(auto){ 
-      endDrive = true;
-      new LimelightAssist();
-    }*/
+    /*
+     * if(auto){ endDrive = true; new LimelightAssist(); }
+     */
   }
 
   @Override
   public void testPeriodic() {
     Scheduler.getInstance().run();
+  }
+
+  public static boolean inAuto() {
+    return m_autonomousCommand != null && m_autonomousCommand.isRunning();
   }
 }
